@@ -1,0 +1,23 @@
+listing = Auction_listings.objects.get(pk=listing_id)
+  user = User.objects.get(username=request.user)
+
+   if request.method == "POST":
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.user = user
+            new_comment.save()
+            listing.comments.add(new_comment)
+            listing.save()
+
+            return HttpResponseRedirect(reverse('list_item', args=(listing.id,)))
+        else:
+            return render(request, "auctions/list_item.html", {
+                "form": comment_form,
+                "listing_id": listing.id
+            })
+    else:
+        return render(request, "auctions/list_item.html", {
+            "form": CommentForm(),
+            "listing_id": listing.id
+        })

@@ -1,0 +1,18 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block body %}
+    <h1> Welcome to CS50 Wiki!</h1>
+
+    <h2>All Pages:</h2>
+
+    <ul>
+        {% for entry in entries %}
+            <li><a href="{% url 'entry' title=entry %}">{{ entry }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
