@@ -1,3 +1,4 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -6,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User
+from .models import User, Posts
 
 
 def index(request):
@@ -69,7 +70,19 @@ def register(request):
 @login_required(login_url='/login')
 def createpost(request):
 
+    data = json.loads(request.body)
+    print("body", data.get("post", ""))
+
     if request.method != "POST":
         return JsonResponse({"error": "POST method required"}, status=400)
+
+    # Get post data
+    post = data.get("post", "")
+    user = request.user
+    postdata = Posts(
+        user=user,
+        content=post
+    )
+    postdata.save()
 
     return JsonResponse({"message": "Post was a success"}, status=201)

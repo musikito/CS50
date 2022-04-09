@@ -18,7 +18,7 @@ function submit_post(event) {
     // Send post to server
     fetch("/create_post", {
         method: "POST",
-        body: JSON.stringify({ create_post: post }),
+        body: JSON.stringify({ post: post }),
 
     })
         .then((response) => response.json())
