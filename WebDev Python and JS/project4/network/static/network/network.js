@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#compose-form").addEventListener("submit", submit_post);
 
     // By default, load all posts
-    // load_page("posts");
+    load_allposts();
 });
 
 function submit_post(event) {
@@ -22,11 +22,23 @@ function submit_post(event) {
 
     })
         .then((response) => response.json())
-        .then((result) => {
-            console.log("submitted form", result);
+    load_allposts();
+
+    document.querySelector("#add-post").value = "";
+}
+
+function load_allposts() {
+    console.log("inside all psots");
+    fetch("/load_allposts")
+        .then((response) => response.json())
+        .then((posts) => {
+            posts.forEach((item) => {
+                const parent_element = document.createElement("div");
+                // build posts
+                // click event to bring full post
+                document.querySelector("#allposts-div").appendChild(parent_element);
+            })
         })
-
-
 }
 
 function make_alert(message) {

@@ -13,6 +13,15 @@ class Posts(models.Model):
         User, on_delete=models.CASCADE, related_name="author")
     content = models.CharField(max_length=500, null=True, blank=True)
     posted_on = models.DateTimeField(auto_now_add=True)
-    liked_by = models.ManyToManyField(
-        User, default=None, blank=True, related_name='liked_by')
+    liked_by = models.ForeignKey(
+        User, default=None, blank=True, null=True, on_delete=models.CASCADE, related_name='liked_by')
     num_likes = models.IntegerField(default='0')
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "content": self.content,
+            "posted_on": self.posted_on.strftime("%b %-d %Y, %-I:%M %p"),
+            "liked_by":  self.liked_by,
+            "num_likes": self.num_likes
+        }

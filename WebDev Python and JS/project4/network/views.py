@@ -7,6 +7,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
+import network
+
 from .models import User, Posts
 
 
@@ -64,6 +66,17 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def load_allposts(request):
+    posts = Posts.objects.filter(user=request.user)
+
+    # Return posts latest to oldest
+    posts = posts.order_by("-posted_on").all()
+
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
+    # return HttpResponse(status=204)
 
 
 @csrf_exempt

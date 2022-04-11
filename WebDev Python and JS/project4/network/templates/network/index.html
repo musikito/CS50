@@ -3,6 +3,7 @@
 
 
 {% block body %}
+{% if user.is_authenticated %}
     <div class="card">
         <div class="card-body my-card">
             <h3><i class="fa-light fa-message">  Add new Post</i> </h3>
@@ -14,4 +15,8 @@
             </form>
         </div>
     </div>
+    {% endif %}
+    <hr>
+    <div id="message-div"></div>
+    <div id="allposts-div"></div>
 {% endblock %}
