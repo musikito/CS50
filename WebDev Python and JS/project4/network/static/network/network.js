@@ -35,12 +35,31 @@ function load_allposts() {
             posts.forEach((item) => {
                 const parent_element = document.createElement("div");
                 // build posts
+                build_posts(item, parent_element);
                 // click event to bring full post
                 document.querySelector("#allposts-div").appendChild(parent_element);
             })
         })
 }
 
+
+
+function build_posts(item, parent_element) {
+    const content = document.createElement("div");
+    // Set and style the date.
+    const date = document.createElement("div");
+    date.innerHTML = item["posted_on"];
+    date.style.display = "inline-block";
+    date.style.float = "right";
+
+    content.appendChild(date);
+    content.style.padding = "10px";
+
+    parent_element.appendChild(content);
+
+
+
+}
 function make_alert(message) {
     const element = document.createElement("div");
     element.classList.add("alert");
