@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.querySelector("#sent").addEventListener("click", () => load_mailbox("sent"));
     // document.querySelector("#archived").addEventListener("click", () => load_mailbox("archive"));
     // document.querySelector("#compose").addEventListener("click", compose_email);
-    // Add event listener to the form
-    document.querySelector("#compose-form").addEventListener("submit", submit_post);
 
     // By default, load all posts
     load_allposts();
+    // Add event listener to the form
+    document.querySelector("#compose-form").addEventListener("submit", submit_post);
+
+
 });
 
 function submit_post(event) {
@@ -45,17 +47,43 @@ function load_allposts() {
 
 
 function build_posts(item, parent_element) {
-    const content = document.createElement("div");
+    // const content = document.createElement("div");
+    const poster = document.createElement("div");
+    const body = document.createElement("div");
+    const like_button = document.createElement("button");
+
     // Set and style the date.
     const date = document.createElement("div");
-    date.innerHTML = item["posted_on"];
+    date.innerHTML = `<strong> Date: </strong> ${item["posted_on"]}`;
+    body.innerHTML = item["content"];
     date.style.display = "inline-block";
     date.style.float = "right";
+    console.log(item["content"]);
+    console.log(item["poster"]);
 
-    content.appendChild(date);
-    content.style.padding = "10px";
+    // Like button
+    like_button.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i>';
+    like_button.classList = "btn btn-outline-primary m-2";
+    // TODO add click event to add likes to DB and change the button to filled
 
-    parent_element.appendChild(content);
+    document.querySelector("#allposts-div").appendChild(poster)
+    document.querySelector("#allposts-div").appendChild(date);
+    document.querySelector("#allposts-div").appendChild(like_button);
+    document.querySelector("#allposts-div").appendChild(body);
+    document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
+
+
+
+
+    // content.appendChild(date);
+    // content.style.padding = "10px";
+
+    // parent_element.appendChild(content);
+
+    //Style the parent element
+    parent_element.style.borderstyle = "solid";
+    parent_element.style.borderwith = "3px";
+    parent_element.style.margin = "10px";
 
 
 

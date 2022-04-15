@@ -10,7 +10,9 @@ class User(AbstractUser):
 
 class Posts(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="author")
+        User, on_delete=models.CASCADE, related_name="tweets")
+    poster = models.ForeignKey(
+        User, default=None, on_delete=models.PROTECT, related_name="author")
     content = models.CharField(max_length=500, null=True, blank=True)
     posted_on = models.DateTimeField(auto_now_add=True)
     liked_by = models.ForeignKey(
@@ -19,7 +21,9 @@ class Posts(models.Model):
 
     def serialize(self):
         return {
+
             "id": self.id,
+            "poster": self.poster.username,
             "content": self.content,
             "posted_on": self.posted_on.strftime("%b %-d %Y, %-I:%M %p"),
             "liked_by":  self.liked_by,

@@ -69,7 +69,13 @@ def register(request):
 
 
 def load_allposts(request):
-    posts = Posts.objects.filter(user=request.user)
+    logged_in = request.user.is_authenticated
+    if logged_in:
+        posts = Posts.objects.filter(user=request.user)
+        print("logged in")
+    else:
+        posts = Posts.objects.all()
+        print("not logged in")
 
     # Return posts latest to oldest
     posts = posts.order_by("-posted_on").all()
@@ -94,6 +100,7 @@ def createpost(request):
     user = request.user
     postdata = Posts(
         user=user,
+        poster=request.user,
         content=post
     )
     postdata.save()
