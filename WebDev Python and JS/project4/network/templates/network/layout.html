@@ -7,53 +7,46 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 
     </head>
     <body>
         <div class="sidebar">
             <i class=" fab fa-twitter"></i>
+            {% if user.is_authenticated %}
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">account_circle</span><h2>{{ user.username }}</h2>
+            </div>
+            {% endif %}
             <div class="sidebarOption active">
-                <i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'index' %}"> Home</a>
-                
+                <span class="material-icons-outlined">home</span><h2>  <a href="{% url 'index' %}">All Posts</a></h2>
             </div>
-
-
-
-        
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Network</a>
-          
-            <div>
-              <ul class="navbar-nav mr-auto">
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <div class="btn-group-vertical"><a class="nav-link" href="#"><i class="fa-thin fa-user"></i><strong>{{ user.username }}</strong></a></div>
-                    </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Following</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-              </ul>
+            {% if user.is_authenticated %}
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">perm_identity</span><h2> Profile</h2>
             </div>
-          </nav>
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">face</span><h2> Following</h2>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">logout</span><h2> <a href="{% url 'logout' %}">Log Out</a></h2>
+            </div>
+            {% else %}
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">login</span><h2> <a href="{% url 'login' %}">Log In</a></h2>
+            </div>
+            <div class="sidebarOption">
+                <span class="material-icons-outlined">how_to_reg</span><h2> <a href="{% url 'register' %}">Register</a></h2>
+            </div>
+            
+        {% endif %}
+
         </div>
+
         <div class="body">
             {% block body %}
+           
+            
             {% endblock %}
 
         </div>

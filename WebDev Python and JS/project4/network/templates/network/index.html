@@ -3,15 +3,25 @@
 
 
 {% block body %}
+<div class="feed">
+    <div class="feed_header">
+        <h2>Home</h2>
+    </div>
+
 {% if user.is_authenticated %}
     <div class="card">
         <div class="card-body my-card">
-            <h3><i class="fa-light fa-message">  Add new Post</i> </h3>
+            <h3><span class="material-icons-outlined">
+                mode_comment
+                </span>  Add new Post</h3>
             <form id="compose-form">
-                <textarea class="mt-2 form-control" id="add-post" rows="3" placeholder="What's Happening?"></textarea>
+                <div class="tweetbox_input">
+                    <img src="static/network/profile.png" />
+                    <textarea class="mt-2 form-control" id="add-post" rows="3" placeholder="What's Happening?"></textarea>
                     <div class="mt-2 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary" id="add-it" > Post</button>
+                        <button type="submit" class="btn_tweet" id="add-it" > Post</button>
                     </div>
+                </div>
             </form>
         </div>
     </div>
@@ -19,4 +29,5 @@
     <hr>
     <div id="message-div"></div>
     <div id="allposts-div"></div>
+</div>
 {% endblock %}

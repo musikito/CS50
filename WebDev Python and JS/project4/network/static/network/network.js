@@ -49,26 +49,43 @@ function load_allposts() {
 function build_posts(item, parent_element) {
     // const content = document.createElement("div");
     const poster = document.createElement("div");
+    const poster_avatar = document.createElement("div");
     const body = document.createElement("div");
     const like_button = document.createElement("button");
+    const num_likes = document.createElement("div");
+    const date = document.createElement("div");
 
     // Set and style the date.
-    const date = document.createElement("div");
     date.innerHTML = `<strong> Date: </strong> ${item["posted_on"]}`;
-    body.innerHTML = item["content"];
     date.style.display = "inline-block";
     date.style.float = "right";
+
+    // Body
+    body.innerHTML = item["content"];
+
+    // User
+    poster.innerHTML = item["poster"];
+    poster_avatar.classList = "post_avatar";
+    poster_avatar.innerHTML = ' <img src="static/network/profile.png" />';
+
+    num_likes.innerHTML = item["num_likes"];
+
+    // DEBUG
     console.log(item["content"]);
     console.log(item["poster"]);
+    console.log(item["num_likes"]);
 
     // Like button
-    like_button.innerHTML = '<i class="fa fa-heart-o" aria-hidden="true"></i>';
+    like_button.innerHTML = '<span class="material-icons-outlined"> favorite_border</span>';
     like_button.classList = "btn btn-outline-primary m-2";
-    // TODO add click event to add likes to DB and change the button to filled
+    // TODO add click event to add likes to DB and change the button to filled && update DB
 
-    document.querySelector("#allposts-div").appendChild(poster)
+    // Build posts
+    document.querySelector("#allposts-div").appendChild(poster);
+    document.querySelector("#allposts-div").appendChild(poster_avatar);
     document.querySelector("#allposts-div").appendChild(date);
     document.querySelector("#allposts-div").appendChild(like_button);
+    document.querySelector("#allposts-div").appendChild(num_likes);
     document.querySelector("#allposts-div").appendChild(body);
     document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
 
