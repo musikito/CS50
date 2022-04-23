@@ -127,5 +127,43 @@ a {
     font-size: 20px;
     border: none;
     outline: none;
+}
 
+.post_avatar img {
+    border-radius: 50%;
+    height: 40px;
+}
+
+.post_avatar {
+    padding: 20px;
+}
+
+.post {
+    display: flex;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--twitter-background);
+    padding-bottom: 10px;
+}
+
+.post_footer {
+    display: flex;
+    margin-top: 10px;
+}
+
+.body_text h3 {
+    font-size: 15px;
+    margin-bottom: 5px;
+
+}
+
+.body_text {
+    flex: 1;
+    padding: 10px;
+}
+
+.date {
+    display: flex;
+    font-size: 15px;
+    margin-bottom: 5px;
+    float: right;
 }

@@ -35,73 +35,72 @@ function load_allposts() {
         .then((response) => response.json())
         .then((posts) => {
             posts.forEach((item) => {
-                const parent_element = document.createElement("div");
+
                 // build posts
-                build_posts(item, parent_element);
+                build_posts(item);
                 // click event to bring full post
-                document.querySelector("#allposts-div").appendChild(parent_element);
+                // document.querySelector("#allposts-div").appendChild(parent_element);
             })
         })
 }
 
 
 
-function build_posts(item, parent_element) {
-    // const content = document.createElement("div");
+function build_posts(item) {
+    const content = document.createElement("div");
+    content.classList = "post";
+    const postheader = document.createElement("div");
+    postheader.classList = "post_header";
+    const postfooter = document.createElement("div");
+    postfooter.classList = "post_footer";
     const poster = document.createElement("div");
     const poster_avatar = document.createElement("div");
     const body = document.createElement("div");
-    const like_button = document.createElement("button");
+    body.classList = "body_text";
+    const like_button = document.createElement("icon");
     const num_likes = document.createElement("div");
     const date = document.createElement("div");
+    date.classList = "date";
 
-    // Set and style the date.
-    date.innerHTML = `<strong> Date: </strong> ${item["posted_on"]}`;
-    date.style.display = "inline-block";
-    date.style.float = "right";
-
-    // Body
-    body.innerHTML = item["content"];
+    // Date.
+    date.innerHTML = `Posted on: ${item["posted_on"]}`;
 
     // User
     poster.innerHTML = item["poster"];
     poster_avatar.classList = "post_avatar";
     poster_avatar.innerHTML = ' <img src="static/network/profile.png" />';
 
-    num_likes.innerHTML = item["num_likes"];
+    postheader.appendChild(date);
+    postheader.appendChild(poster_avatar);
+    postheader.appendChild(poster);
 
-    // DEBUG
-    console.log(item["content"]);
-    console.log(item["poster"]);
-    console.log(item["num_likes"]);
+
+
+    // Body
+    body.innerHTML = `<h3> ${item["content"]} </h3`;
+    content.appendChild(body);
 
     // Like button
     like_button.innerHTML = '<span class="material-icons-outlined"> favorite_border</span>';
-    like_button.classList = "btn btn-outline-primary m-2";
     // TODO add click event to add likes to DB and change the button to filled && update DB
 
+    num_likes.innerHTML = item["num_likes"];
+    num_likes.style.float = "left";
+
+    // Post footer
+    postfooter.appendChild(like_button);
+    postfooter.appendChild(num_likes);
+
     // Build posts
-    document.querySelector("#allposts-div").appendChild(poster);
-    document.querySelector("#allposts-div").appendChild(poster_avatar);
-    document.querySelector("#allposts-div").appendChild(date);
-    document.querySelector("#allposts-div").appendChild(like_button);
-    document.querySelector("#allposts-div").appendChild(num_likes);
+    // document.querySelector("#allposts-div").appendChild(poster);
+    // document.querySelector("#allposts-div").appendChild(poster_avatar);
+    // document.querySelector("#allposts-div").appendChild(date);
+    // document.querySelector("#allposts-div").appendChild(like_button);
+    // document.querySelector("#allposts-div").appendChild(num_likes);
+    document.querySelector("#allposts-div").appendChild(postheader);
     document.querySelector("#allposts-div").appendChild(body);
+    document.querySelector("#allposts-div").appendChild(postfooter);
     document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
-
-
-
-
-    // content.appendChild(date);
-    // content.style.padding = "10px";
-
-    // parent_element.appendChild(content);
-
-    //Style the parent element
-    parent_element.style.borderstyle = "solid";
-    parent_element.style.borderwith = "3px";
-    parent_element.style.margin = "10px";
-
 
 
 }
