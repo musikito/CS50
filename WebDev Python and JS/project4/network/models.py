@@ -29,3 +29,18 @@ class Posts(models.Model):
             "liked_by":  self.liked_by,
             "num_likes": self.num_likes
         }
+
+
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    follower = models.ManyToManyField(
+        User, blank=True, related_name="follower")
+    following = models.ManyToManyField(
+        User, blank=True, related_name="following")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "follower": self.user.username,
+            "following": self.following,
+        }
