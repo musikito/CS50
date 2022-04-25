@@ -4,12 +4,12 @@
 
 {% block body %}
 <div class="feed">
-    <div id="header" class="feed_header">
-        <h2>Home</h2>
+    <div class="feed_header">
+        <h2><h2>{{ user.username }}'s Profile</h2>
     </div>
 
 {% if user.is_authenticated %}
-    <div id="card" class="card">
+    <div class="card">
         <div class="card-body my-card">
             <h3><span class="material-icons-outlined">
                 mode_comment
@@ -29,6 +29,5 @@
     <hr>
     <div id="message-div"></div>
     <div class="posts" id="allposts-div"></div>
-    <div class="posts" id="allpostsprof-div"></div>
 </div>
 {% endblock %}

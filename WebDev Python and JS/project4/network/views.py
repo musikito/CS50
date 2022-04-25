@@ -68,8 +68,27 @@ def register(request):
         return render(request, "network/register.html")
 
 
+@login_required(login_url='/login')
+def profile(request):
+    logged_in = request.user.is_authenticated
+    if logged_in:
+        posts = Posts.objects.filter(user=request.user)
+        print("logged in")
+        print(posts)
+    else:
+        posts = Posts.objects.all()
+        print("not logged in")
+
+    # Return posts latest to oldest
+    posts = posts.order_by("-posted_on").all()
+
+    return JsonResponse([post.serialize() for post in posts], safe=False)
+
+    # return HttpResponse(status=204)
+
+
 def load_allposts(request):
-    #logged_in = request.user.is_authenticated
+    # logged_in = request.user.is_authenticated
     # if logged_in:
     #    posts = Posts.objects.filter(user=request.user)
     #    print("logged in")
@@ -85,8 +104,8 @@ def load_allposts(request):
     # return HttpResponse(status=204)
 
 
-@csrf_exempt
-@login_required(login_url='/login')
+@ csrf_exempt
+@ login_required(login_url='/login')
 def createpost(request):
 
     data = json.loads(request.body)
