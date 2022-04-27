@@ -10,7 +10,7 @@ class User(AbstractUser):
 
 class Posts(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="tweets")
+        User, default=None, on_delete=models.CASCADE, related_name="user_id")
     poster = models.ForeignKey(
         User, default=None, on_delete=models.PROTECT, related_name="author")
     content = models.CharField(max_length=500, null=True, blank=True)
@@ -21,7 +21,7 @@ class Posts(models.Model):
 
     def serialize(self):
         return {
-
+            "userid": self.user.id,
             "id": self.id,
             "poster": self.poster.username,
             "content": self.content,
@@ -37,10 +37,3 @@ class Profile(models.Model):
         User, blank=True, related_name="follower")
     following = models.ManyToManyField(
         User, blank=True, related_name="following")
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "follower": self.user.username,
-            "following": self.following,
-        }

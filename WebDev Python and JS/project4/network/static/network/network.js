@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // document.querySelector("#sent").addEventListener("click", () => load_mailbox("sent"));
     // document.querySelector("#archived").addEventListener("click", () => load_mailbox("archive"));
     // document.querySelector("#compose").addEventListener("click", compose_email);
-    document.querySelector("#profile").addEventListener("click", () => profile(), false);
+    // document.querySelector("#profile").addEventListener("click", () => profile(), false);
 
     // By default, load all posts
     load_allposts();
@@ -15,28 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // 
 
-function profile() {
-
-    fetch("/profile")
-
-        .then((response) => response.json())
-        .then((posts) => {
-            // it's a dirty way to get the username, but...
-            const nombre = posts[0].poster;
-            document.querySelector("#header").innerHTML = `<h2>Profile of: ${nombre}</h2>`;
-            // Hide the submit form
-            document.getElementById("card").style.display = "none";
-            const prof = true;
-            posts.forEach((item) => {
-                console.log(item);
-                // build posts
-                build_posts(item, prof);
-                // click event to bring full post
-                // document.querySelector("#allposts-div").appendChild(parent_element);
-            })
-        })
-
-}
 
 function submit_post(event) {
     event.preventDefault();
@@ -59,11 +37,11 @@ function load_allposts() {
     fetch("/load_allposts")
         .then((response) => response.json())
         .then((posts) => {
-            const prof = false
+
             posts.forEach((item) => {
                 console.log(item);
                 // build posts
-                build_posts(item, prof);
+                build_posts(item);
                 // click event to bring full post
                 // document.querySelector("#allposts-div").appendChild(parent_element);
             })
@@ -72,7 +50,7 @@ function load_allposts() {
 
 
 
-function build_posts(item, prof) {
+function build_posts(item) {
 
     const content = document.createElement("div");
     content.classList = "post";
@@ -91,9 +69,12 @@ function build_posts(item, prof) {
 
     // Date.
     date.innerHTML = `Posted on: ${item["posted_on"]}`;
-
+    // <a href="{% url 'user_profile' username=user.username  %}"> Profile</a>
     // User
-    poster.innerHTML = item["poster"];
+    const posterlink = item["poster"];
+    // This is the only way I could pass a var to DJango
+    // Maybe is a better way?
+    poster.innerHTML = `<a href="/user_profile/${posterlink}">` + posterlink + '</a>';
     poster_avatar.classList = "post_avatar";
     poster_avatar.innerHTML = ' <img src="static/network/profile.png" />';
 
@@ -119,32 +100,20 @@ function build_posts(item, prof) {
     postfooter.appendChild(num_likes);
 
     // Build posts
-    if (prof) {
-        document.querySelector("#allposts-div").style.display = "none";
-        document.querySelector("#allpostsprof-div").style.display = "block";
-        // Profile posts
-        document.querySelector("#allpostsprof-div").appendChild(postheader);
-        document.querySelector("#allpostsprof-div").appendChild(body);
-        document.querySelector("#allpostsprof-div").appendChild(postfooter);
-        document.querySelector("#allpostsprof-div").appendChild(document.createElement("hr"));
-    } else {
-        document.querySelector("#allposts-div").style.display = "block";
-        document.querySelector("#allpostsprof-div").style.display = "none";
-        // document.querySelector("#allposts-div").appendChild(poster);
-        // document.querySelector("#allposts-div").appendChild(poster_avatar);
-        // document.querySelector("#allposts-div").appendChild(date);
-        // document.querySelector("#allposts-div").appendChild(like_button);
-        // document.querySelector("#allposts-div").appendChild(num_likes);
-        document.querySelector("#allposts-div").appendChild(postheader);
-        document.querySelector("#allposts-div").appendChild(body);
-        document.querySelector("#allposts-div").appendChild(postfooter);
-        document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
-    }
 
-
-
+    // document.querySelector("#allposts-div").appendChild(poster);
+    // document.querySelector("#allposts-div").appendChild(poster_avatar);
+    // document.querySelector("#allposts-div").appendChild(date);
+    // document.querySelector("#allposts-div").appendChild(like_button);
+    // document.querySelector("#allposts-div").appendChild(num_likes);
+    document.querySelector("#allposts-div").appendChild(postheader);
+    document.querySelector("#allposts-div").appendChild(body);
+    document.querySelector("#allposts-div").appendChild(postfooter);
+    document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
 
 }
+
+
 function make_alert(message) {
     const element = document.createElement("div");
     element.classList.add("alert");

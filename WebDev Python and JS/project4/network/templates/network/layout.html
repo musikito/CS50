@@ -15,7 +15,7 @@
             <i class=" fab fa-twitter"></i>
             {% if user.is_authenticated %}
             <div class="sidebarOption">
-                <span class="material-icons-outlined">account_circle</span><a id="profile" href="#"><h2>{{ user.username }}</h2></a>
+                <span class="material-icons-outlined">account_circle</span><a href="{% url 'profile' %}"><h2>{{ user.username }}</h2></a>
             </div>
             {% endif %}
             <div class="sidebarOption active">
@@ -23,7 +23,7 @@
             </div>
             {% if user.is_authenticated %}
             <div class="sidebarOption">
-                <span class="material-icons-outlined">perm_identity</span><h2><a id="profile" href="#"> Profile</a></h2>
+                <span class="material-icons-outlined">perm_identity</span><h2><a id="profile" href="{% url 'user_profile' username=user.username  %}"> Profile</a></h2>
             </div>
             <div class="sidebarOption">
                 <span class="material-icons-outlined">face</span><h2> Following</h2>

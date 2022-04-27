@@ -7,9 +7,8 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 
-import network
 
-from .models import User, Posts
+from .models import Profile, User, Posts
 
 
 def index(request):
@@ -70,21 +69,31 @@ def register(request):
 
 @login_required(login_url='/login')
 def profile(request):
-    logged_in = request.user.is_authenticated
-    if logged_in:
-        posts = Posts.objects.filter(user=request.user)
-        print("logged in")
-        print(posts)
-    else:
-        posts = Posts.objects.all()
-        print("not logged in")
+    pass
+#    logged_in = request.user.is_authenticated
+#    if logged_in:
+#        posts = Posts.objects.filter(user=request.user)
+#        print("logged in")
+#        print(posts)
+#    else:
+#        posts = Posts.objects.all()
+#        print("not logged in")
 
     # Return posts latest to oldest
-    posts = posts.order_by("-posted_on").all()
+#    posts = posts.order_by("-posted_on").all()
 
-    return JsonResponse([post.serialize() for post in posts], safe=False)
+#   return JsonResponse([post.serialize() for post in posts], safe=False)
 
     # return HttpResponse(status=204)
+
+
+def user_profile(request, username):
+    currentuser = request.user
+    profileuser = User.objects.get(username=username)
+    userposts = Posts.objects.filter(user=profileuser).order_by('id').reverse()
+    print(userposts)
+
+    return HttpResponse(status=204)
 
 
 def load_allposts(request):
