@@ -1,0 +1,29 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+
+{% block body %}
+
+{% for post in posts %}
+
+<div class="post">
+    <div class="post_header">
+        <div class="date">{{ post.posted_on }}</div>
+        <div class="post_avatar">
+            <img src="/static/network/profile.png" />
+        </div>
+        <div>{{ post.user.username }}</div>
+        <div class="body_text">
+            <h3> {{ post.content }}</h3>
+        </div>
+        <div class="post_footer">
+            <span class="material-icons-outlined like-button"> favorite_border</span>{{post.num_likes.count}}
+        </div>
+    </div>
+</div>
+<hr>
+
+{% endfor %}
+
+{% endblock %}
+

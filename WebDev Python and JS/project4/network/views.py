@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
 
 
-from .models import Like, User, Posts
+from .models import FollowUser, Like, User, Posts
 
 
 def index(request):
@@ -119,8 +119,19 @@ def likes(request):
     return redirect("index")
 
 
-def load_user_posts(request, username):
-    pass
+def following(request):
+    '''https://stackoverflow.com/questions/50431810/the-queryset-value-for-an-exact-lookup-must-be-limited-to-one-result-using-slici'''
+    if request.user.is_authenticated:
+        user = request.user
+        users = User.objects.filter(user_followers__follower=user)
+        posts = Posts.objects.filter(poster__in=users)
+        context = {
+            "posts": posts,
+        }
+
+        return render(request, "network/following.html", context)
+
+    # return redirect("index")
 
 
 def follow_user(request, username):
