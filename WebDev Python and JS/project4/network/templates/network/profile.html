@@ -3,31 +3,80 @@
 
 
 {% block body %}
-<div class="feed">
-    <div class="feed_header">
-        <h2><h2>{{ user.username }}'s Profile</h2>
-    </div>
 
-{% if user.is_authenticated %}
-    <div class="card">
-        <div class="card-body my-card">
-            <h3><span class="material-icons-outlined">
-                mode_comment
-                </span>  Add new Post</h3>
-            <form id="compose-form">
-                <div class="tweetbox_input">
-                    <img src="static/network/profile.png" />
-                    <textarea class="mt-2 form-control" id="add-post" rows="3" placeholder="What's Happening?"></textarea>
-                    <div class="mt-2 d-flex justify-content-end">
-                        <button type="submit" class="btn_tweet" id="add-it" > Post</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+
+<div class="feed">
+<div class="feed_header">
+    <h3>{{username}}</h3>
+    <div class="post_avatar">
+        <img src="/static/network/profile.png" />
     </div>
-{% endif %}
-    <hr>
-    <div id="message-div"></div>
-    <div class="posts" id="allposts-div"></div>
 </div>
+
+    {% if user.is_authenticated and user.username != username %}
+        {% if check_follow %} 
+            <div class="sidebarOption">
+                <i class="fa fa-user-times" aria-hidden="true"></i>
+                <a href="{% url 'unfollow_user' username=username %}"> Unfollow</a>
+            </div>    
+        {% else %} 
+            <div class="sidebarOption">        
+                <i class="fa fa-user-plus" aria-hidden="true"></i> 
+                <a href="{% url 'follow_user' username=username %}"> Follow</a>
+            </div>            
+        {% endif%}
+
+    {% endif%}
+
+    <h4> Followers: {{ followers.count }}</h4>
+    <h4> Following: {{ following.count }}</h4>
+
+
+<!-- TODO-->
+<!-- Need to convet this part to JS-->
+<!-- Or move it to a separate fiel nd use in all posts and index ?????-->
+<hr>
+
+
+    {% for post in posts %}
+
+        <div class="post">
+            <div class="post_header">
+                <div class="date">{{ post.posted_on }}</div>
+                <div class="post_avatar">
+                    <img src="/static/network/profile.png" />
+                </div>
+                <div class="body_text">
+                    <h3> {{ post.content }}</h3>
+                </div>
+                <div class="post_footer">
+                    <span class="material-icons-outlined like-button"> favorite_border</span>{{post.num_likes.count}}
+                </div>
+            </div>
+        </div>
+        <hr>
+
+    {% endfor %}
+</div>
+<!-- pages -->
+<div>
+    <span>
+        {% if pages.has_previous %}
+            <a href="?page=1"> First</a>
+            <a href="?page={{ pages.previous_page_number }}"> Previous</a>
+        {% endif %}
+        <span>
+            Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+        </span>
+        {% if pages.has_next %}
+            <a href="?page={{ pages.next_page_number }}"> Next</a>
+            <a href="?page={{ pages.paginator.num_pages }}"> Last</a>
+        {% endif %}
+    </span>
+</div>
+
+<div id="message-div"></div>
+{% block script %}
+            <script src="{% static 'network/like.js' %}"></script>
+{% endblock %}
 {% endblock %}

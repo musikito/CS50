@@ -17,7 +17,8 @@ body {
 
 .sidebarOption,
 .material-icons-outlined,
-.fa-twitter {
+.fa-twitter,
+.follow {
     padding: 20px;
 }
 
@@ -94,7 +95,9 @@ a {
     padding: 15px 20px;
 }
 
-.feed_header h2 {
+.feed_header h2,
+h3,
+h4 {
     font-size: 20px;
     font-weight: 800;
 }
@@ -166,4 +169,29 @@ a {
     font-size: 15px;
     margin-bottom: 5px;
     float: right;
+}
+
+.like-button {
+    cursor: pointer;
+    user-select: none;
+}
+
+.like-button:hover {
+    background-color: var(--twitter-background);
+    border-radius: 30px;
+    color: var(--twitter-color);
+    transition: color 100ms ease-out;
+}
+
+.follow {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.follow:hover {
+    background-color: var(--twitter-background);
+    border-radius: 30px;
+    color: var(--twitter-color);
+    transition: color 100ms ease-out;
 }

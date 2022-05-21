@@ -15,7 +15,7 @@
             <i class=" fab fa-twitter"></i>
             {% if user.is_authenticated %}
             <div class="sidebarOption">
-                <span class="material-icons-outlined">account_circle</span><a href="{% url 'profile' %}"><h2>{{ user.username }}</h2></a>
+                <span class="material-icons-outlined">account_circle</span><a href="{% url 'user_profile' username=user.username %}"><h2>{{ user.username }}</h2></a>
             </div>
             {% endif %}
             <div class="sidebarOption active">
@@ -50,8 +50,6 @@
             {% endblock %}
 
         </div>
-        {% block script %}
-            <script src="{% static 'network/network.js' %}"></script>
-        {% endblock %}
+        
     </body>
 </html>
