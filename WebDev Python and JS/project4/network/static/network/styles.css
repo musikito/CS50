@@ -195,3 +195,25 @@ h4 {
     color: var(--twitter-color);
     transition: color 100ms ease-out;
 }
+
+.edit {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 20px;
+}
+
+.edit:hover {
+    background-color: var(--twitter-background);
+    border-radius: 30px;
+    color: var(--twitter-color);
+    transition: color 100ms ease-out;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}

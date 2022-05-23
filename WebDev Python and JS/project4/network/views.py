@@ -183,3 +183,7 @@ def createpost(request):
     postdata.save()
 
     return JsonResponse({"message": "Post was a success"}, status=201)
+
+
+def editpost(request):
+    pass

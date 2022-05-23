@@ -54,6 +54,10 @@ function getLikes(postid, color) {
     window.location.reload();
     // document.getElementById("megusta").innerHTML = document.getElementById("megusta").innerHTML;
 }
+function editpost(postid, x) {
+    alert(postid);
+
+}
 
 // TODO SPLIT THIS FUNCTION
 // is getting too big
@@ -113,11 +117,18 @@ function build_posts(item) {
     // TODO add click event to add likes to DB and change the button to filled && update DB
 
     num_likes.innerHTML = item["num_likes"];
-    // num_likes.style.float = "left";
+    num_likes.className = "likes";
+
+    // Edit post
+    const editlink = document.createElement("div");
+    editlink.id = "edit_link";
+    editlink.innerHTML = '<i onclick="editpost(\'' + `${item.id}` + '\', this)" class="fas fa-edit"></i>';
+    editlink.className = "edit";
 
     // Post footer
     postfooter.appendChild(like_button);
     postfooter.appendChild(num_likes);
+    postfooter.appendChild(editlink);
 
     // Build posts
 
