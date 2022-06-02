@@ -157,8 +157,6 @@ def load_allposts(request):
 
     return JsonResponse([post.serialize() for post in posts], safe=False)
 
-    # return HttpResponse(status=204)
-
 
 @ csrf_exempt
 @ login_required(login_url='/login')

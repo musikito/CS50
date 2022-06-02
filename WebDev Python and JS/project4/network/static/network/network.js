@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function submit_post() {
-    //event.preventDefault();
+
     const post = document.querySelector("#add-post").value;
 
     // Send post to server
@@ -25,15 +25,15 @@ function submit_post() {
 
     document.querySelector("#add-post").value = "";
     window.location.reload();
-}
+} // End submit_post
 
-function editpost(x) {
+function editpost(content) {
     const divs = document.querySelector("#allposts-div");
-    document.querySelector("#add-post").value = x;
+    document.querySelector("#add-post").value = content;
 
     divs.style.display = "none";
 
-}
+} // End editpost
 
 function load_allposts() {
     fetch("/load_allposts")
@@ -42,21 +42,21 @@ function load_allposts() {
         .then((posts) => {
 
             posts.forEach((item) => {
-                console.log(item);
+                // console.log(item);
                 // build posts
                 build_posts(item);
                 // TODO click event to bring full post
-                // document.querySelector("#allposts-div").appendChild(parent_element);
+
             })
         })
 
-}
+}// End load_allposts
 
 function getLikes(postid, numlikes) {
+
     const numlikesdiv = document.getElementById(String(numlikes));
     //console.log(numlikesdiv.innerHTML);
 
-    // color.style.color = "red";
     fetch("/likes", {
         method: 'POST',
         body: postid,
