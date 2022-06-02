@@ -92,8 +92,6 @@ def user_profile(request, username):
 
     return render(request, "network/profile.html", context)
 
-    # return HttpResponse(status=204)
-
 
 @ csrf_exempt
 @ login_required(login_url='/login')
@@ -111,12 +109,12 @@ def likes(request):
 
         try:
 
-            return Like.objects.create(liked_by=user, post_liked=post)
+            Like.objects.create(liked_by=user, post_liked=post)
         except IntegrityError:
             # Posts.objects.filter(pk=post_id).update(is_liked=False)
             Like.objects.filter(liked_by=user, post_liked=post).delete()
 
-    return redirect("index")
+        return JsonResponse(num_likes, safe=False)
 
 
 def following(request):
@@ -183,7 +181,3 @@ def createpost(request):
     postdata.save()
 
     return JsonResponse({"message": "Post was a success"}, status=201)
-
-
-def editpost(request):
-    pass

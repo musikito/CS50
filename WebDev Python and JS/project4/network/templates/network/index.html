@@ -5,6 +5,7 @@
 {% block body %}
 {% block script %}
             <script src="{% static 'network/network.js' %}"></script>
+           <!--  <script src="{% static 'network/like.js' %}"></script> -->
 {% endblock %}
 <div class="feed">
     <div id="header" class="feed_header">
@@ -31,7 +32,11 @@
 {% endif %}
     <hr>
     <div id="message-div"></div>
-    <div class="posts" id="allposts-div"></div>
-    <div class="posts" id="allpostsprof-div"></div>
+    <div class="posts" id="allposts-div">
+       {{ request.user.username | json_script:"usuario"}}
+    </div>
+
+    
+    </div>
 </div>
 {% endblock %}

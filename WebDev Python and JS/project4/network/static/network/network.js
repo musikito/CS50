@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-function submit_post(event) {
-    event.preventDefault();
+function submit_post() {
+    //event.preventDefault();
     const post = document.querySelector("#add-post").value;
 
     // Send post to server
@@ -24,11 +24,20 @@ function submit_post(event) {
     load_allposts();
 
     document.querySelector("#add-post").value = "";
+    window.location.reload();
+}
+
+function editpost(x) {
+    const divs = document.querySelector("#allposts-div");
+    document.querySelector("#add-post").value = x;
+
+    divs.style.display = "none";
+
 }
 
 function load_allposts() {
-
     fetch("/load_allposts")
+
         .then((response) => response.json())
         .then((posts) => {
 
@@ -36,28 +45,27 @@ function load_allposts() {
                 console.log(item);
                 // build posts
                 build_posts(item);
-                // click event to bring full post
+                // TODO click event to bring full post
                 // document.querySelector("#allposts-div").appendChild(parent_element);
             })
         })
+
 }
 
+function getLikes(postid, numlikes) {
+    const numlikesdiv = document.getElementById(String(numlikes));
+    //console.log(numlikesdiv.innerHTML);
 
-function getLikes(postid, color) {
-    //console.log(color);
     // color.style.color = "red";
     fetch("/likes", {
         method: 'POST',
         body: postid,
-    }).then(response => response.json());
-    // Not very elegant, but...
-    window.location.reload();
-    // document.getElementById("megusta").innerHTML = document.getElementById("megusta").innerHTML;
+    }).then(response => response.json())
+        .then((num_likes) => {
+            numlikesdiv.innerHTML = num_likes;
+        });
 }
-function editpost(postid, x) {
-    alert(postid);
 
-}
 
 // TODO SPLIT THIS FUNCTION
 // is getting too big
@@ -75,10 +83,11 @@ function build_posts(item) {
     body.classList = "body_text";
     const like_button = document.createElement("icon");
     const num_likes = document.createElement("div");
-    num_likes.id = "megusta";
-    // console.log(num_likes.id);
+    num_likes.id = `megusta${item.id}`;
     const date = document.createElement("div");
     date.classList = "date";
+    // https://docs.djangoproject.com/en/dev/ref/templates/builtins/#json-script
+    const usuario = JSON.parse(document.getElementById("usuario").textContent);
 
     // Date.
     date.innerHTML = `Posted on: ${item["posted_on"]}`;
@@ -102,9 +111,13 @@ function build_posts(item) {
     // content.appendChild(body);
 
     // Like button
+    if (usuario != item["poster"]) {
+        //if (item["is_liked"]) {
+        //like_button.innerHTML = '<i class="material-icons-outlined" style="color:red" onclick="getLikes(\'' + `${item.id}` + '\')"> favorite_border</i>';
+        like_button.innerHTML = '<i class="material-icons-outlined" style="color:red"> favorite_border</i>';
+        like_button.addEventListener("click", function () { getLikes(item.id, num_likes.id) });
 
-    //if (item["is_liked"]) {
-    like_button.innerHTML = '<i class="material-icons-outlined" style="color:red" onclick="getLikes(\'' + `${item.id}` + '\', this)"> favorite_border</i>';
+    }
     //} else {
     // like_button.innerHTML = '<i class="fa fa-heart" aria-hidden="true" onclick="getLikes(\'' + `${item.id}` + '\', \'' + `${item.num_likes}` + '\')" ></i>';
     //}
@@ -119,16 +132,29 @@ function build_posts(item) {
     num_likes.innerHTML = item["num_likes"];
     num_likes.className = "likes";
 
-    // Edit post
-    const editlink = document.createElement("div");
-    editlink.id = "edit_link";
-    editlink.innerHTML = '<i onclick="editpost(\'' + `${item.id}` + '\', this)" class="fas fa-edit"></i>';
-    editlink.className = "edit";
+
+
+    // Edit post link
+    if (usuario == item["poster"]) {
+        const content = item["content"];
+        const editlink = document.createElement("div");
+        editlink.id = "edit_link";
+        // editlink.innerHTML = '<i onclick="editpost(\'' + `${item.id}` + '\', this)" class="fas fa-edit"></i>';
+        editlink.innerHTML = '<i class="fas fa-edit"></i>';
+        // https://stackoverflow.com/questions/256754/how-to-pass-arguments-to-addeventlistener-listener-function        
+        editlink.addEventListener("click", function () { editpost(content) });
+        editlink.className = "edit";
+        postfooter.appendChild(editlink);
+        make_alert("test");
+    }
+
+
 
     // Post footer
+
     postfooter.appendChild(like_button);
     postfooter.appendChild(num_likes);
-    postfooter.appendChild(editlink);
+
 
     // Build posts
 
@@ -136,6 +162,7 @@ function build_posts(item) {
     document.querySelector("#allposts-div").appendChild(body);
     document.querySelector("#allposts-div").appendChild(postfooter);
     document.querySelector("#allposts-div").appendChild(document.createElement("hr"));
+
 
 }
 
