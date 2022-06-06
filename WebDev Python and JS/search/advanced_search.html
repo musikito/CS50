@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search</title>
+        <link rel="stylesheet" href="styles/advanced_styles.css" >
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    </head>
+    <body>
+        
+        <div class="top_nav">
+           <div class="left">
+            <a aria-label="Go to Google Home" href="./index.html" title="Go to Google Home">Google<span class="gb_xc gb_fe" aria-hidden="true"></span></a>
+           </div> 
+           <div class="top_nav_right">
+                <span class="material-icons">apps</span>
+                <span class="material-icons">account_circle</span>
+            </div>
+        </div>
+        <div class="advanced">
+            <p>Advanced Search</p>
+        </div>
+        <div class="divider_line"></div>
+                
+                <form  action="https://google.com/search">
+                       <label class="labelheading">Find pages with...</label>
+                       <span class="spanheading">To do this in search box</span>
+
+                       <div class="form-control">
+                           <label for="as_q">all these words: </label>
+                           <input type="text" name="as_q" />
+                       </div>
+                       <span>Type the important words: <hint>tri-colour rat terrier</hint></span>
+
+                       <div class="form-control">
+                        <label for="as_epq">this exact word or phrase: </label>
+                        <input type="text" name="as_epq" />
+                    </div>
+                    <span>Put exact words in quotes: <hint>rat terrier</hint></span>
+
+                    <div class="form-control">
+                        <label for="as_oq">any these words: </label>
+                        <input type="text" name="as_oq" />
+                    </div>
+                    <span>Type OR between all the words you want: <hint>miniature OR standard</hint></span>
+
+                    <div class="form-control">
+                        <label for="as_eq">none these words: </label>
+                        <input type="text" name="as_eq" />
+                    </div>
+                    <span>Put a minus sign just before words that you don't want: <hint>rodent, -"Jack Russel"</hint></span>
+                    
+                    <div class="form-control">
+                        <label for="as_nlo">numbers ranging from: </label>
+                        <input style="display:table-cell; width:25%; padding-right:16px" type="text" name="as_nlo" />
+                        <label for="as_nhi">to </label>
+                        <input style="display:table-cell; width:25%; padding-right:16px" type="text" name="as_nhi" />
+                    </div>
+                    <span>Put 2 periods between the numbers and add a unit of measure: <hint>10..35 lb, $300..$500, 2010..2011</hint></span>
+                    
+                    <div class="divider_line"></div>
+                    <div class="divider_line"></div>
+                    
+                    <label class="labelheading">Then narrow your results by...</label>
+                    <span class="spanheading"></span>
+
+                    <div class="form-control">
+                        <label for="lr">language: </label>
+                        <select name="lr" autofocus="autofocus" class="input_bar">
+                            <option value="" selected>Any language</option>
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="French">French</option>
+                        </select>
+                    </div>
+                    <span>Find pages in the language you select. </span>
+
+                    <div class="form-control">
+                        <label for="cr">region: </label>
+                        <select name="cr" autofocus="autofocus" class="input_bar">
+                            <option value="" selected>Any region</option>
+                            <option value="US">United States</option>
+                            <option value="MX">Mexico</option>
+                            <option value="DR">Dominican Republic</option>
+                            <option value="SP">Spain</option>
+                        </select>
+                    </div>
+                    <span>Find pages published in a particular region. </span>
+
+                    <div class="form-control">
+                        <label for="as_sitesearch">Last Updated: </label>
+                        <select name="as_sitesearch" autofocus="autofocus" class="input_bar">
+                                <option value="" selected>Any time</option>
+                                <option value="">Past 24 hours</option>
+                                <option value="">Past week</option>
+                                <option value="">Past month</option>
+                                <option value="">Past year</option>
+                            </select>
+                    </div>
+                    <span>Find pages updated within the time you specify. </span>
+
+                    <div class="form-control">
+                        <label for="as_oq">site or domain: </label>
+                        <input type="text" name="as_oq" />
+                    </div>
+                    <span>Search one site (like wikipedia.org ) or limit your results to a domain like  <hint>.edu, .org or .gov</hint></span>
+
+                    <div class="form-control">
+                        <label for="as_occt">terms appearing: </label>
+                        <select name="as_occt" autofocus="autofocus" class="input_bar">
+                                <option value="" selected>Anywhere in the page </option>
+                                <option value="">In the title of the page </option>
+                                <option value="">In the text of the page </option>
+                                <option value="">In the url of the page </option>
+                                <option value="">In the links of the page </option>
+                            </select>
+                    </div>
+                    <span>Search for terms in the whole page, page title, or web address, or links to the page you're looking for. </span>
+
+                    <div class="form-control">
+                        <label for="safe"><a href="https://support.google.com/websearch?p=adv_safesearch&amp;hl=en">SafeSearch </a>: </label>
+                        <select name="safe" autofocus="autofocus" class="input_bar">
+                                <option value="" selected>Show explicit results</option>
+                                <option value="">Hide explicit results</option>
+                            </select>
+                    </div>
+                    <span>Tell <a href="https://support.google.com/websearch?p=adv_safesearch&amp;hl=en">SafeSearch</a> whether to filter sexually explicit content. </span>
+
+                    <div class="form-control">
+                        <label for="as_filetype">file type: </label>
+                        <select name="as_filetype" autofocus="autofocus" class="input_bar">
+                                <option value="" selected>Any format </option>
+                                <option value="">Adobe Acrobat PDF(.pdf) </option>
+                                <option value="">Adobe Postscript(.ps) </option>
+                                <option value="">Autodesk DWF(.dwf) </option>
+                                <option value="">Google Earth KML(.kml) </option>
+                                <option value="">Google Earth KMZ(.kmz) </option>
+                                <option value="">Microsoft Excel(.xls) </option>
+                                <option value="">Microsoft Powerpoint(.ppt) </option>
+                                <option value="">Microsoft Word(.doc) </option>
+                                <option value="">Rich Text format(.rtf) </option>
+                                <option value="">Shockwave Flash(.swf) </option>
+                            </select>
+                    </div>
+                    <span>Find pages in the format you prefer. </span>
+
+                    <div class="form-control">
+                        <label for="sur"><a href="https://support.google.com/websearch?p=ws_images_usagerights&amp;hl=en">usage rights</a>: </label>
+                        <select name="sur" autofocus="autofocus" class="input_bar">
+                                <option value="" selected>not filtered by license </option>
+                                <option value="">free to use or share </option>
+                                <option value="">free to use or share, even commercially </option>
+                                <option value="">free to use or share or modify </option>
+                                <option value="">free to use, share or modify, even commercially </option>
+                            </select>
+                    </div>
+                    <span>Find pages you are free to use yourself. </span>
+
+
+                    <div class="form-submit">
+                        <input type="submit" value="Advanced Search"/>
+                    </div>
+                </form>   
+
+
+               
+                <div class="divider_line"></div>
+                
+                <label class="labelheading">You can also....</label>
+                <span class="spanheading"></span>
+                <div class="footer">
+                <div class="links">
+                    <a href="https://support.google.com/websearch?p=adv_pages_similar&amp;hl=en">Find pages that are similar to a URL</a>
+                    <a href="https://support.google.com/websearch?p=adv_pages_visited&amp;hl=en">Search pages you've visited</a>
+                    <a href="https://support.google.com/websearch?p=adv_operators&amp;hl=en">Use operators in the search box</a>
+                    <a href="/preferences?hl=en">Customize your search settings</a>
+                </div>
+
+                </div> 
+        
+    </body>
+</html>
