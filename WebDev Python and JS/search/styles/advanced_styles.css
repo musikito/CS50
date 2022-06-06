@@ -61,13 +61,6 @@ a {
     font-weight: normal;
 }
 
-label {
-    font-size: 0.82em;
-    display: inline-block;
-    width: 125px;
-    text-align: right;
-
-}
 
 .spanheading {
     font-size: 0.82em;
@@ -101,42 +94,36 @@ form {
 }
 
 
-.form_control {
-    display: table-cell;
-    grid-template-columns: 1fr 2fr;
-    align-items: center;
-    vertical-align: baseline;
-    column-gap: 20px;
-
+.input-form {
+    margin: 15px 45px;
 }
 
-.form_control submit {
-    display: flex;
-    justify-content: flex-end;
-    margin: 5px 0 25px 0;
+.input-form tr {
+    font-size: 10pt;
 }
+
+.input-form tr td form-submit {
+    float: right;
+    background-color: #4d90fe;
+    color: #FFFFFF;
+}
+
 
 .form-submit {
-    display: flex;
-    justify-content: flex-end;
-    margin: 5px 0 25px 0;
+    background-color: #f8f9fa;
+    border-style: none;
+    margin: 11px 4px;
+    padding: 8px 16px;
 }
 
-
-input[type="text"] {
-    width: 560px;
-    text-align: left;
-    margin: 0em;
-    display: inline-flex;
-    justify-content: flex-end;
-    padding-left: 16px;
-    padding: 5px 8px 5px 8px;
-    font-size: 0.82em;
-    border-radius: 1px;
-    border: 1px solid #d9d9d9;
-    border-top: 1px solid #c0c0c0;
-    outline-color: #3079ed;
+.searchinput {
+    border-radius: 5px;
+    display: block;
+    margin: 7px;
+    padding: 7px;
+    width: 500px;
 }
+
 
 input[type="submit"] {
     display: inline-block;
@@ -156,39 +143,9 @@ input[type="submit"]:focus {
     border-color: #8ab4f8;
 }
 
-.input_bar {
-    user-select: none;
-    list-style: none;
+.searchinput:hover,
+.searchinput:focus,
+.form-submit:hover {
+    box-shadow: 0 0 1px #888888;
     outline: none;
-    width: 565px;
-    text-align: left;
-    text-decoration: none;
-    margin: 0em;
-    display: inline-flex;
-    justify-content: flex-end;
-    padding-left: 16px;
-    padding: 5px 8px 5px 8px;
-    font-size: 0.82em;
-    border-radius: 1px;
-    border: 1px solid #d9d9d9;
-    border-top: 1px solid #c0c0c0;
-    outline-color: #3079ed;
-
-}
-
-.footer {
-    font-size: 1em;
-    margin: 25px 45px 45px 45px;
-}
-
-.footer links {
-    display: inline-block;
-    line-height: 1.25em;
-    font-size: 0.85em;
-    text-align: left;
-}
-
-.footer links a {
-    display: inline-block;
-    text-decoration: none;
 }
