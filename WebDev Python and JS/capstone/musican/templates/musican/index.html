@@ -1,0 +1,39 @@
+{% extends "musican/layout.html" %}
+{% load static %}
+{% block body %}
+    {% if category %}
+        <h2>{{ category }}</h2>
+    {% else %}
+        <h2>Active Listings</h2>
+    {% endif %}
+
+    {% if listings.count == 0 %}
+    <div class="alert alert-danger"> There's no items for this Category</div>
+    {% endif %}
+    {% for listing in listings %}
+    {% if listing.active %}
+        <div class="container border p-2 m-2">
+            <div class="row">
+                <div class="col">
+                    {% if listing.image %}
+                        <img src="{% static listing.image.url %}" alt="" style="width:300px; height: auto;" />
+                    {% else %}
+                    <img style = "width: 20w;" src="{% static 'musican/images/no-image.jpeg' %}" alt="" style="width:300px; height: auto;"/>
+                    {% endif %}
+                </div>
+                <div class="col text-left">
+                    <h2 class="display-4"> <a href="{% url 'list_item' listing.id %}">{{ listing.title }}</h2></a>
+                   <!--- <h3 class="display-4"><a href="{% url 'category' listing.category %}"> {{ category }}</a></h3> -->
+                    {{ listing.description }}
+                    {% if listing.current_bid == 0 %}
+                        <h2>${{ listing.starting_bid }}</h2>
+                    {% else %}
+                        <h2>${{ listing.current_bid }}</h2>
+                    {% endif %}
+                    <p>Added: {{ listing.time_added }}</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endfor %}
+{% endblock %}

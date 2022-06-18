@@ -1,0 +1,66 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    --musican-color: #387CA3;
+    --musican-background: #52ADC8;
+    --musican-color-acc: #55C39E;
+    display: flex;
+    height: 100vh;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 10px;
+
+}
+
+.sidebarOption {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebarOption .material-icons-outlined,
+.follow,
+.musican {
+    padding: 20px;
+}
+
+.musican {
+    display: block;
+    border-radius: 45px;
+    max-width: 245px;
+    max-height: 256px;
+    width: auto;
+    height: auto;
+}
+
+.sidebarOption h2 {
+    font-weight: 800;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.sidebarOption:hover {
+    background-color: var(--musican-background);
+    border-radius: 30px;
+    color: var(--musican-color-acc);
+    transition: color 100ms ease-out;
+}
+
+.sidebarOption .active {
+    color: var(--musican-color-acc);
+}
+
+
+.sidebar {
+    border-right: 1px solid var(--musican-background);
+    flex: 0.2;
+    min-width: 250px;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-left: 20px;
+}
