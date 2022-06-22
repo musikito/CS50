@@ -15,8 +15,8 @@ class AuctionListForm(ModelForm):
 
 class BidForm(ModelForm):
     class Meta:
-        model = Bids
-        fields = ["current_bid"]
+        model = Genre
+        fields = ["genre_name", "genre_image"]
 
 
 class CommentForm(ModelForm):

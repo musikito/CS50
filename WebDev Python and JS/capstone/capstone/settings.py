@@ -110,6 +110,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/musican/images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'musican/static/musican/images')
+MP3_URL = 'songs'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

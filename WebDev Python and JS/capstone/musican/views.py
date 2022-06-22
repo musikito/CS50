@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Auction_Listings, Bids, Comments, Watchlist
+from .models import User, Auction_Listings, Comments, Watchlist
 from .forms import *
 
 REGISTER = "musican/register.html"
@@ -70,6 +70,31 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, REGISTER)
+
+
+def user_profile(request, username):
+    user = User.objects.get(username=username)
+    # user_posts = Posts.objects.filter(poster=user)
+    # pages = Paginator(user_posts, 10)
+    # This ATTRIBS come from the models related_name
+    following = user.user_following.all()
+    followers = user.user_followers.all()
+
+    check_follow = False
+    for i in followers:
+        if request.user.username == i.follower.username:
+            check_follow = True
+
+    context = {
+        "username": username,
+        # "posts": user_posts,
+        "following": following,
+        "followers": followers,
+        "check_follow": check_follow,
+        # "pages": pages,
+    }
+
+    return render(request, "network/profile.html", context)
 
 
 # See Documentation for this decorator:
