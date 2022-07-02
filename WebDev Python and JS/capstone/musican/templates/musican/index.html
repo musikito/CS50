@@ -1,14 +1,85 @@
 {% extends "musican/layout.html" %}
 {% load static %}
-{% block body %}
-    {% if category %}
-        <h2>{{ category }}</h2>
-    {% else %}
-        <h2>Active Listings</h2>
-    {% endif %}
 
-    {% if listings.count == 0 %}
-    <div class="alert alert-danger"> There's no items for this Category</div>
+{% block body %}
+
+<head>
+    <title>{% block title %}Musican{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="{% static 'musican/styles.css' %}" rel="stylesheet" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'musican/images/favicon.ico' %}"/>
+  </head>
+
+		<style>
+		
+			nav {
+				order: 1;
+			}
+			.nav_links {
+				list-style: none;
+			}
+
+			.nav_links li {
+				display: inline-block;
+				padding: 0px 20px;
+			}
+
+			.nav_links li a:hover {
+				color: rgb(255, 255, 255);
+			}
+
+			li a {
+				display: block;
+				color: white;
+				text-align: center;
+				padding: 5px 5px;
+				text-decoration: none;
+			}
+			li a:hover:not(.active) {
+				background-color: #111;
+			}
+			.active {
+				background-color: #4caf50;
+			}
+		</style>
+	
+<!-- Main Body-->	
+<div style="padding: 20px;
+            padding-top: 50px;
+			background-color: #52ADC8;
+			height: auto">
+			<br />
+<!-- Start Container -->
+<div class="container">
+    <div class="row">
+        {% for song in music %}
+      <div class="col">
+        {% if song.picture %} 
+        <img class="music" src="{% static song.picture.url %}" alt="" />
+  {% else %}
+      <img class="music"  src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt=""/>
+  {% endif %}
+      <p>{{ song.title }}</p>  
+      </div>
+      {%endfor%}
+      
+    </div>
+</div>
+<!-- End Container -->
+</div>
+<!-- Main Body ends -->
+   
+
+
+    {% if music.count == 0 %}
+    <div class="alert alert-danger"> There's no items for this Genre</div>
     {% endif %}
     {% for listing in listings %}
     {% if listing.active %}
@@ -18,7 +89,7 @@
                     {% if listing.image %}
                         <img src="{% static listing.image.url %}" alt="" style="width:300px; height: auto;" />
                     {% else %}
-                    <img style = "width: 20w;" src="{% static 'musican/images/no-image.jpeg' %}" alt="" style="width:300px; height: auto;"/>
+                    <img style = "width: 20w;" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" style="width:300px; height: auto;"/>
                     {% endif %}
                 </div>
                 <div class="col text-left">
@@ -36,4 +107,5 @@
         </div>
     {% endif %}
     {% endfor %}
+    
 {% endblock %}

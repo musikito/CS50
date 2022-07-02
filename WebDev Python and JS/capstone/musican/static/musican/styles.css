@@ -1,19 +1,21 @@
 * {
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+
 }
 
 body {
+    margin: 0;
     --musican-color: #387CA3;
     --musican-background: #52ADC8;
     --musican-color-acc: #55C39E;
     display: flex;
     height: 100vh;
-    max-width: 1300px;
+    max-width: auto;
     margin-left: auto;
     margin-right: auto;
     padding: 0 10px;
+
 
 }
 
@@ -51,7 +53,7 @@ body {
     transition: color 100ms ease-out;
 }
 
-.sidebarOption .active {
+.active {
     color: var(--musican-color-acc);
 }
 
@@ -60,36 +62,67 @@ body {
     border-right: 1px solid var(--musican-background);
     flex: 0.2;
     min-width: 250px;
+    padding-top: 50px;
     margin-top: 20px;
     padding-left: 20px;
     padding-left: 20px;
 }
 
-.top_nav {
+header {
     display: flex;
+    /* Using flexbox property for parent
+    also known as inline-flex */
     justify-content: space-between;
-    padding: 20px 30px;
+    /* Items are evenly distributed in
+    the line; firstitem is on the
+    start line, last item on the
+    end line*/
     align-items: center;
+    padding: 5px;
+    position: fixed;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
 }
 
-.top_nav a {
-    text-decoration: none;
-    cursor: pointer;
-    color: #000;
-    margin-right: 20px;
-}
 
-.top_nav a:hover {
+a:hover {
+    border-bottom: 2.4 solid green;
+    color: var(--musican-color-background);
     text-decoration: underline;
 }
 
-.top_nav_right {
-    display: flex;
-    align-items: center;
-    min-width: 13vw;
-    justify-content: space-between;
+.main {
+    width: 1440px;
 }
 
-.top_nav_right .top_nav_right__apps {
-    margin-right: 10px;
+i {
+    text: align;
+    margin: 0 auto;
+    position: absolute;
+    top: 60px;
+    right: 65px;
+}
+
+.music {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #333333;
+    display: inline-block;
+    margin-top: 50px;
+    margin-right: 20px;
+    vertical-align: top;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.music::before {
+    content: "";
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }

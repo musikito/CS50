@@ -16,7 +16,7 @@ PLAYLIST = "musican/playlist.html"
 
 def index(request):
     return render(request, "musican/index.html", {
-        "listings": Auction_Listings.objects.all()
+        "music": SongInfo.objects.all()
     })
 
 
