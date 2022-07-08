@@ -1,0 +1,103 @@
+
+    <!--Sidebar starts-->
+    <div class="sidebar">   
+        <a href="{% url 'index' %}">           
+          <img src="static/musican/images/musican.png" alt="musican" class="musican">
+        </a> 
+       <!--Auth start-->
+        {% if user.is_authenticated %}
+        
+          <div class="sidebarOption">
+            <a id="profile" href="{% url 'user_profile' username=user.username  %}"></a><span class="material-icons-outlined">perm_identity</span><h2> Profile</a></h2>
+        </div>
+        <div class="sidebarOption">
+          <a id="profile" href="{% url 'following' %}"><span class="material-icons-outlined">face</span><h2>Following</a></h2>
+        </div>
+        <div class="sidebarOption">
+          <a href="{% url 'logout' %}"><span class="material-icons-outlined">logout</span><h2> Log Out</a></h2>
+        </div> 
+          {% else %}
+          <div class="sidebarOption active">
+            <a href="{% url 'index' %}"><span class="material-icons-outlined">home</span><h2>  Home</a></h2>
+          </div>
+          <div class="sidebarOption">
+            <a href="{% url 'index' %}"> <span class="material-icons-outlined">search</span><h2>  Explore</a></h2>
+          </div>
+            <div class="sidebarOption">
+              <a href="{% url 'login' %}"><span class="material-icons-outlined">login</span><h2>Log In</a></h2>
+            </div>
+            <div class="sidebarOption">
+              <a href="{% url 'register' %}"><span class="material-icons-outlined">how_to_reg</span><h2> Register</a></h2>
+            </div>
+        
+        {% endif %}
+      <!--Auth ends-->
+      </div>
+  
+      <!--Sidebar ends-->
+     <!-- Header Starts-->
+  <header>
+    <nav class="navbar navbar-expand-lg" style="background-color: #8cc6b3; padding-left: 250px;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'index' %}">Musican</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+  </header>
+  <!-- Header End-->
+  
+      <!--TODO to be deleted
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'index' %}">Active Listings</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'category_list' %}">Categories</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create_listing' %}">Create a New Listing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'watchlist' %}">Your Watchlist<span class="badge badge-secondary">{{ user.watchlist.count }}</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+      </ul>
+      -->
