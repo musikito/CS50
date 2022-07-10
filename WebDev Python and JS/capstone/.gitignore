@@ -2,6 +2,8 @@
 env/
 *.pyc
 *.sqlite3
+.coverage
 # JavaScript stuff
 node_modules/
 build/
+snippets.html

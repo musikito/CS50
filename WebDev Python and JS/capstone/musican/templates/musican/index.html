@@ -1,18 +1,21 @@
 {% extends "musican/layout.html" %}
 {% load static %}
 
-{% block body %}
 
+{%block head%}
 <head>
     <title>{% block title %}Musican{% endblock %}</title>
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <link href="{% static 'musican/styles.css' %}" rel="stylesheet" />
-    <link rel="shortcut icon" type="image/png" href="{% static 'musican/images/favicon.ico' %}" />
+    <style>
+        /* Make the image fully responsive */
+        .carousel-inner img {
+          width: 100%;
+          height: 100%;
+        }
+        </style>
+
 </head>
+{%endblock%}
+{% block body %}
 
 <!-- Main Body-->
 <div style="padding: 20px;
@@ -20,28 +23,69 @@
 			background-color: #52ADC8;
 			height: auto">
     <br />
+
     <!-- Start Container -->
+    
     <div class="container">
+        <div id="gallery" class="carousel slide carousel-fade" data-ride="carousel" data-aos="fade-up" data-aos-delay="300">
+
+            <!-- The slideshow -->
+            <div class="carousel-inner">
+              
+                {% for song in music %} 
+              <div class="carousel-item {% if forloop.counter0 == 0 %}active {% endif %}" >
+                
+                <img src="{% static song.picture.url %}" class="d-block  w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block rounded position-absolute bg-custom">
+                    
+                    <p>{{song.title}}</p>
+                  </div>
+                
+              </div>
+              {%endfor%}
+              
+            
+            </div>
+            
+           
+          </div>
+
+        <!-- carrousel -->
+        <div class="slider">
+            <!-- slide 1 
+            {% for song in music %} 
+            <div class="slide">
+                
+              <img src="{% static song.picture.url %}" alt="" />
+             
+              
+            </div>
+            
+            {%endfor%}
+            -->
+          </div>
+
+        <!-- carrousel -->
+        
         <div class="row">
-            {% for song in music %}
+            {% for song in music %} 
             <div class="col">
+                
                 {% if song.picture %}
-                <img class="music" src="{% static song.picture.url %}" alt="" />
+                <img class=" music" src="{% static song.picture.url %}" alt="" />
                 {% else %}
                 <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" />
                 {% endif %}
                 <p>{{ song.title }}</p>
+            
             </div>
             {%endfor%}
-
-
-            
-
         </div>
     </div>
     <!-- End Container -->
 </div>
 <!-- Main Body ends -->
+<script src="{% static 'musican/carrousel.js' %}"></script>
 
 
 
