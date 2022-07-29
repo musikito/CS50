@@ -1,3 +1,35 @@
+ 
+    <div class="container">
+      <div id="gallery" class="carousel slide" data-ride="carousel" >
+
+          <!-- The slideshow -->
+          <div class="carousel-inner">
+            
+              {% for song in music %} 
+            <div class="carousel-item {% if forloop.counter0 == 0 %}active {% endif %}" data-interval="2000">
+              
+              <img  src="{% static song.picture.url %}" class='img-fluid' alt="...">
+              <div class="carousel-caption d-none d-md-block">
+                  
+                  <p>{{song.title}}</p>
+                </div>
+              
+            </div>
+            {%endfor%}
+            
+          
+          </div>
+          
+         
+        </div>
+</div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  <!-- carrousel -->
  <div class="slideshow-container">
 
@@ -201,6 +233,73 @@ prevSlide.addEventListener("click", function () {
 </div>
 
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.slider {
+  width: 100%;
+  /*
+  max-width: 800px;
+  height: 350px;
+  */
+  max-width: 200px;
+  height: 200px;
+  position: relative;
+  overflow: hidden; 
+  border-radius: 15px;
+}
+
+.slide {
+  width: 100%;
+   /*
+  max-width: 800px;
+  height: 350px;
+  */
+  max-width: 200px;
+  height: 200px;
+  position: absolute;
+  transition: all 0.5s;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: none;
+  border-radius: 50%;
+  z-index: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 18px;
+}
+.btn:active {
+  transform: scale(1.1);
+}
+.btn-prev {
+  top: 45%;
+  left: 2%;
+}
+
+.btn-next {
+  top: 45%;
+  right: 2%;
+}
 
 <!DOCTYPE html>
 <html>

@@ -5,13 +5,7 @@
 {%block head%}
 <head>
     <title>{% block title %}Musican{% endblock %}</title>
-    <style>
-        /* Make the image fully responsive */
-        .carousel-inner img {
-          width: 100%;
-          height: 100%;
-        }
-        </style>
+    
 
 </head>
 {%endblock%}
@@ -23,20 +17,18 @@
 			background-color: #52ADC8;
 			height: auto">
     <br />
-
-    <!-- Start Container -->
-    
+    <!-- carrousel -->
     <div class="container">
-        <div id="gallery" class="carousel slide carousel-fade" data-ride="carousel" data-aos="fade-up" data-aos-delay="300">
-
+        <div id="gallery" class="carousel slide" data-ride="carousel" >
+  
             <!-- The slideshow -->
             <div class="carousel-inner">
               
                 {% for song in music %} 
-              <div class="carousel-item {% if forloop.counter0 == 0 %}active {% endif %}" >
+              <div class="carousel-item {% if forloop.counter0 == 0 %}active {% endif %}" data-interval="3000">
                 
-                <img src="{% static song.picture.url %}" class="d-block  w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block rounded position-absolute bg-custom">
+                <img  src="{% static song.picture.url %}"  class="rounded-circle img-fluid" alt="..." width="200" height="200">
+                <div class="carousel-caption d-none d-md-block">
                     
                     <p>{{song.title}}</p>
                   </div>
@@ -49,23 +41,11 @@
             
            
           </div>
+  </div>
 
-        <!-- carrousel -->
-        <div class="slider">
-            <!-- slide 1 
-            {% for song in music %} 
-            <div class="slide">
-                
-              <img src="{% static song.picture.url %}" alt="" />
-             
-              
-            </div>
-            
-            {%endfor%}
-            -->
-          </div>
+    <!-- carrousel -->
 
-        <!-- carrousel -->
+    <!-- Start Container -->
         
         <div class="row">
             {% for song in music %} 
