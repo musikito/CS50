@@ -12,10 +12,7 @@
 {% block body %}
 
 <!-- Main Body-->
-<div style="padding: 20px;
-            padding-top: 50px;
-			background-color: #52ADC8;
-			height: auto">
+<div>
     <br />
     <!-- carrousel -->
     <div class="container">
@@ -30,7 +27,7 @@
                 <img  src="{% static song.picture.url %}"  class="rounded-circle img-fluid" alt="..." width="200" height="200">
                 <div class="carousel-caption d-none d-md-block">
                     
-                    <p>{{song.title}}</p>
+                    <p class="songTitle">{{song.title}}</p>
                   </div>
                 
               </div>
@@ -56,16 +53,16 @@
                 {% else %}
                 <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" />
                 {% endif %}
-                <p>{{ song.title }}</p>
+                <p class="songTitle">{{ song.title }}</p>
             
             </div>
             {%endfor%}
         </div>
     </div>
+</div>
     <!-- End Container -->
 </div>
 <!-- Main Body ends -->
-<script src="{% static 'musican/carrousel.js' %}"></script>
 
 
 
@@ -86,7 +83,6 @@
         </div>
         <div class="col text-left">
             <h2 class="display-4"> <a href="{% url 'list_item' listing.id %}">{{ listing.title }}</h2></a>
-            <!--- <h3 class="display-4"><a href="{% url 'category' listing.category %}"> {{ category }}</a></h3> -->
             {{ listing.description }}
             {% if listing.current_bid == 0 %}
             <h2>${{ listing.starting_bid }}</h2>
