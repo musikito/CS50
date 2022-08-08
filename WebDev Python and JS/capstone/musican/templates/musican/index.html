@@ -6,7 +6,8 @@
 <head>
     <title>{% block title %}Musican{% endblock %}</title>
     
-
+   
+   
 </head>
 {%endblock%}
 {% block body %}
@@ -58,10 +59,48 @@
             </div>
             {%endfor%}
         </div>
+        <!-- End Container -->
+        <!-- Player start -->
+        <div class="player">
+            <p class="songTitle">Artist: Nombre</p>
+            <h1> Titulo de la cancion </h1>
+            <div class="track">
+                <img src="{% static 'musican/images/play.png' %}" alt="" id="playBtn">
+                <div id="waveform"></div>
+            </div>
+        </div>
+        <!-- Player ends -->
+        <script>
+            // Play Button
+            var playBtn = document.getElementById("playBtn");
+
+            var wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: '#ddd',
+            progressColor: '#ff006c',
+            barWidth: 4,
+            responsive: true,
+            height: 90,
+            barRadius: 4
+        });
+            wavesurfer.load("static/musican/images/songs/Son_MENTIRAS.mp3");
+
+            playBtn.onclick = function() {
+                wavesurfer.playPause();
+                // Change button img accordingly
+                if(playBtn.src.includes("play.png")) {
+                    playBtn.src = "{% static 'musican/images/pause.png' %}";
+                } else {
+                    playBtn.src = "{% static 'musican/images/play.png' %}";
+                } // End if
+            } // End onclick
+
+            wavesurfer.on('finish', function(){
+                playBtn.src = "{% static 'musican/images/play.png' %}";
+                wavesurfer.stop();
+            })
+        </script>
     </div>
-</div>
-    <!-- End Container -->
-</div>
 <!-- Main Body ends -->
 
 
