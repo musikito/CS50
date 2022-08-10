@@ -60,16 +60,23 @@
             {%endfor%}
         </div>
         <!-- End Container -->
-        <!-- Player start -->
-        <div class="player">
-            <p class="songTitle">Artist: Nombre</p>
-            <h1> Titulo de la cancion </h1>
-            <div class="track">
-                <img src="{% static 'musican/images/play.png' %}" alt="" id="playBtn">
-                <div id="waveform"></div>
+       
+        <!-- Second Player -->
+        <div class="container">
+            <div class="music-player">
+                <img src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="music-icon" id="music-icon">
+                <div class="info">
+                    <h1>Artist Name</h1>
+                    <h3> Titulo de la cancion </h3>
+                    <div id="waveform"></div>
+                    <div class="control-bar">
+                        <img src="{% static 'musican/images/play.png' %}" alt="play" id="playBtn" title="Play / Pause">
+                        <img src="{% static 'musican/images/stop.png' %}" alt="stop" id="stopBtn" title="Stop">
+                        <img src="{% static 'musican/images/volume.png' %}"alt="volume" id="volumeBtn" title="Mute / Unmute">
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Player ends -->
         <script>
             // Play Button
             var playBtn = document.getElementById("playBtn");

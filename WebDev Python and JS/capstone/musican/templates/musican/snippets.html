@@ -1,4 +1,21 @@
- 
+  <!-- Player start -->
+  <div class="player">
+    <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="">
+    <div class="track_info">
+        <p class="songTitle">Artist: Nombre</p>
+        <h3> Titulo de la cancion </h3>
+        <div id="waveform"></div>
+        <div class="control_bar">
+            <img src="{% static 'musican/images/play.png' %}" alt="" id="playBtn" title="Play / Pause">
+            <img src="{% static 'musican/images/stop.png' %}" alt="" id="stopBtn" title="Stop">
+            <img src="{% static 'musican/images/volume.png' %}" alt="" id="volumeBtn" title="Mute / Unmute">
+
+        </div>
+    </div>
+</div>
+<!-- Player ends -->
+    
+    
     <div class="container">
       <div id="gallery" class="carousel slide" data-ride="carousel" >
 
