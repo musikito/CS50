@@ -1,7 +1,2 @@
-Free stack for deployment
-
-GitHub
-Netlify/Vercel
-LayerCI
-
-https://wavesurfer-js.org/
+python3 -m venv env
+source env/bin/activate

@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import CharField, ImageField
 
-from capstone.settings import MP3_URL
+from backend.settings import MP3_URL
 
 
 class User(AbstractUser):
