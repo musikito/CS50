@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.forms import CharField, ImageField
 
-from capstone.settings import MP3_URL
+from backend.settings import MP3_URL
 
 
 class User(AbstractUser):
@@ -81,17 +81,6 @@ class SongInfo(models.Model):
 
     def __str__(self):
         return self.title
-    
-    
-    def serialize(self):
-        return {
-            "title": self.title,
-            "song_url": self.song,
-            "picture": self.picture,
-            "artist_name": self.artist,
-            "duration": self.duration,
-            "genre": self.genre,
-        }
 
 # https://docs.djangoproject.com/en/4.0/topics/db/examples/many_to_many/
 

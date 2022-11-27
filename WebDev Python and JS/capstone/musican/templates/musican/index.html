@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
     
     
+    
 </head>
 {%endblock%}
 {% block body %}
@@ -49,13 +50,15 @@
         <div class="row">
             {% for song in music %} 
             <div class="col">
+            <a id="clickIt" onclick="loadSong(`{{ song.title }}`, `{{ song.song }}`, `{{ song.artist }}`, `{{ song.picture }}`);return false;"  href="#">
                 
-                {% if song.picture %}
-                <img class=" music" src="{% static song.picture.url %}" alt="" />
-                {% else %}
-                <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" />
+                 {% if song.picture %}
+                    <img class=" music" src="{% static song.picture.url %}" alt="" />
+                 {% else %}
+                    <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" />
                 {% endif %}
-                <p class="songTitle">{{ song.title }}</p>
+               <p class="songTitle">{{ song.title }}</p>
+            </a> 
             
             </div>
             {%endfor%}
@@ -63,12 +66,12 @@
         <!-- End Container -->
        <!--player starts-->
          <!-- Second Player -->
-   <div class="container">
-    <div class="music-player">
-        <img src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="music-icon" id="music-icon">
+   <div class="container" id="player" style="display: none;">
+    <div class="music-player" id="player_inside" >
+        <img src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="music-icon" id="song_image">
         <div class="info">
-            <h1>Artist Name</h1>
-            <h3> Titulo de la cancion </h3>
+            <h1 id="artist_name">Artist Name</h1>
+            <h3 id="song_title"> Titulo de la cancion </h3>
             <div id="waveform"></div>
             <div class="control-bar">
                 <img src="{% static 'musican/images/play.png' %}" alt="play" id="playBtn" title="Play / Pause">
@@ -79,6 +82,14 @@
     </div>
 </div>
 <script src="{% static 'musican/musicPlayer.js' %}"></script>
+<script type="text/javascript">
+    // function aqui(value,value1) {
+        // console.log(value,value1);
+        // console.log("cojollo");
+    // }
+ 
+    // $('a#clickIt').click(function(){ console.log("hola"); })
+</script>
   
        <!--player ends-->
        

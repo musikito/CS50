@@ -163,6 +163,13 @@ a:hover {
     font-family: 'Quicksand', sans-serif;
     
 }
+#player{
+    position: fixed;
+    bottom: 25%;
+    left: 10%
+    
+   
+}
 
 .music-player{
     position: absolute;
@@ -180,7 +187,7 @@ a:hover {
     align-items: center;
 }
 
-#music-icon{
+#song_image{
     height: 150px;
     width: 150px;
     border-radius: 50%;

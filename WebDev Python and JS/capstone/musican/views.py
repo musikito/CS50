@@ -1,13 +1,14 @@
+import json
 from sre_parse import CATEGORIES
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Auction_Listings, Comments, Watchlist
-from .forms import *
+from .models import User, Auction_Listings, Comments, Watchlist, SongInfo
+
 
 REGISTER = "musican/register.html"
 LOGIN = "musican/login.html"
@@ -18,6 +19,14 @@ def index(request):
     return render(request, "musican/index.html", {
         "music": SongInfo.objects.all()
     })
+
+
+def load_allsongs(request):
+
+    songs = SongInfo.objects.all()
+    songs = songs.order_by("-posted_on").all()
+
+    return JsonResponse([song.serialize() for song in songs], safe=False)
 
 
 def login_view(request):
