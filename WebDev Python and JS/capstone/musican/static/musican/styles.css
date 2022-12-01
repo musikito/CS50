@@ -167,9 +167,66 @@ a:hover {
     position: fixed;
     bottom: 25%;
     left: 10%
-    
-   
 }
+/* Like / Add to playlist button */
+.likeBtn {
+    cursor: pointer;
+    user-select: none;
+}
+
+.likeBtn:hover {
+    background-color: #fff2f6;
+    border-radius: 30px;
+    color: red;
+    transition: color 100ms ease-out;
+}
+/* Close button */
+#closeBtn {
+    border-radius: 50%;
+    padding: 0.5em;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #333333;
+    color: rgb(0, 0, 6);
+    position: relative;
+    margin-top: 10px;
+    margin-right: 10px;
+    position:absolute;
+    top:0;
+    right:0
+  }
+  #closeBtn:hover {
+    border: 2px solid blue;
+    background-color:#fff2f6;
+    color: #ffffff;
+  }
+  
+  #closeBtn::before {
+    content: " ";
+    position: absolute;
+    display: block;
+    background-color: blue;
+    width: 2px;
+    left: 12px;
+    top: 5px;
+    bottom: 5px;
+    transform: rotate(45deg);
+  }
+  #closeBtn::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    background-color: blue;
+    height: 2px;
+    top:12px;
+    left: 5px;
+    right: 5px;
+    transform: rotate(45deg);
+  }
+  
+
+/* End close button */
+
 
 .music-player{
     position: absolute;

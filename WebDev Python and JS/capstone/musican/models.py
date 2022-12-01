@@ -16,13 +16,9 @@ class User(AbstractUser):
 # this needs to be either a DB table
 # or some new way
 GENRE = (
-    ('a', 'Electronics'),
-    ('b', 'Collectibles & Art'),
-    ('c', 'Home & Garden'),
-    ('d', 'Clothing, Shoes & Accessories'),
-    ('e', 'Toys & Hobbies'),
-    ('f', 'Sporting Goods'),
-    ('g', 'Books, Movies & Music'),
+    ('a', 'Merengue'),
+    ('b', 'Tropical'),
+    ('c', 'Rock'),
     ('h', 'Misc.')
 
 )
@@ -81,8 +77,7 @@ class SongInfo(models.Model):
 
     def __str__(self):
         return self.title
-    
-    
+
     def serialize(self):
         return {
             "title": self.title,
@@ -133,39 +128,8 @@ class AlbumInfo(models.Model):
         return self.album_name
 
 
-class Auction_Listings(models.Model):
-    title = models.CharField(max_length=64)
-    description = models.TextField()
-    # Changed to use ImageField, install Pillow via pip3
-    # https://docs.djangoproject.com/en/4.0/topics/files/
-    # https://docs.djangoproject.com/en/4.0/topics/files/
-    image = models.ImageField(null=True, blank=True)
-    # image = models.CharField(max_length=200, blank=True, null=True)
-    # Could this be an array?
-    # Or a table from a DB
-    category = models.CharField(
-        max_length=1, choices=GENRE, default=GENRE[7][1])
-    active = models.BooleanField(blank=True, default=True)
-    owner = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='owner')
-    starting_bid = models.IntegerField(default=0)
-    current_bid = models.IntegerField(default=0)
-    # bids = models.ManyToManyField(
-    #    Bids, blank=True, related_name="bids")
-    time_added = models.DateTimeField(auto_now_add=True, blank=True)
-    # Need to add time_to_end
-
-    comments = models.ManyToManyField(
-        Comments, blank=True, related_name="comments")
-
-
-class Watchlist(models.Model):
+class Playlist(models.Model):
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='watchlist')
+        User, on_delete=models.CASCADE, related_name='playlist')
     item_watched = models.ForeignKey(
-        Auction_Listings, on_delete=models.CASCADE, related_name='item_watched')
-
-
-class CategoryList(models.Model):
-    cat_name = models.ForeignKey(
-        Auction_Listings, on_delete=models.CASCADE, related_name='cat_name')
+        SongInfo, on_delete=models.CASCADE, related_name='item_watched')
