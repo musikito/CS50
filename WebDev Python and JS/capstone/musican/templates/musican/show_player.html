@@ -1,0 +1,99 @@
+{% extends "musican/layout.html" %}
+{% load static %}
+{%block head%}
+<head>
+  <title>{% block title %}Musican Playlists{% endblock %}</title>
+
+  <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+</head>
+{%endblock%}
+	
+{% block body %}
+{% if message %}
+<div class="alert alert-{{msg_type}}">{{ message }}</div>
+{% endif %}
+<br />
+
+<!--player starts-->
+  <!-- Second Player -->
+  <div class="container" id="player" style="display:block">
+    <div class="music-player" id="player_inside">
+      <button id="closeBtn"></button>
+        {% if song.picture %}
+        <img src="{% static song.picture.url %}" alt="music-icon" id="song_image" />
+        {% else %}
+      <img src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="music-icon" id="song_image" />
+      {% endif %}
+      <div class="info">
+        <a id="clickIt"
+       href="{% url 'artist' song.artist.id %}">
+        <h1 >{{ song.artist }}</h1>
+        </a>
+        <a id="clickIt"
+       href="{% url 'genre' song.genre.id %}">
+        <h4>{{ song.genre }}</h4>
+        </a>
+        <h3 id="song_url" data-src={{song.song}}>{{ song.title }}</h3>
+        <div id="waveform"></div>
+        <div class="control-bar">
+          <img
+            src="{% static 'musican/images/play.png' %}"
+            alt="play"
+            id="playBtn"
+            title="Play / Pause"
+          />
+          <img
+            src="{% static 'musican/images/stop.png' %}"
+            alt="stop"
+            id="stopBtn"
+            title="Stop"
+          />
+          <img
+            src="{% static 'musican/images/volume.png' %}"
+            alt="volume"
+            id="volumeBtn"
+            title="Mute / Unmute"
+          />
+          <span class="badge" id="currentTime">00:00:00</span>
+          <form action="{% url 'add_to_playlist' song.id %}" method="POST">
+            {% csrf_token %}
+            {% if added %}
+            <button
+            type="submit"
+            name="button"
+            value="Playlist"
+            class="btn btn-secondary btn-sm"
+          >
+            Remove from Playlist
+          </button>
+            {%else%}
+            <button
+              type="submit"
+              name="button"
+              value="Playlist"
+              class="btn btn-secondary btn-sm"
+            >
+              Add to Playlist
+            </button>
+            {%endif%}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="{% static 'musican/player.js' %}"></script>
+  <script type="text/javascript">
+    // function aqui(value,value1) {
+    // console.log(value,value1);
+    // console.log("cojollo");
+    // }
+
+    // $('a#clickIt').click(function(){ console.log("hola"); })
+  </script>
+
+
+  <!--player ends-->
+
+
+{% endblock %}

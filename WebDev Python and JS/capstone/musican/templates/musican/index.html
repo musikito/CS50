@@ -1,55 +1,27 @@
-{% extends "musican/layout.html" %} {% load static %} {%block head%}
+{% extends "musican/layout.html" %}
+{% load static %}
+{%block head%}
 <head>
-  <title>{% block title %}Musican{% endblock %}</title>
-
-  <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
-</head>
-{%endblock%} {% block body %}
-
-<!-- Main Body-->
+    <title>{% block title %}Musican{% endblock %}</title>
+  
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+  </head>
+{%endblock%}
+{% block body %}
 <div>
-  {% if message %}
-  <div class="alert alert-{{msg_type}}">{{ message }}</div>
-  {% endif %}
-  <br />
-  <!-- carrousel -->
-  <div class="container">
-    <div id="gallery" class="carousel slide" data-ride="carousel">
-      <!-- The slideshow -->
-      <div class="carousel-inner">
-        {% for song in music %}
-        <div
-          class="carousel-item {% if forloop.counter0 == 0 %}active {% endif %}"
-          data-interval="3000"
-        >
-          <img
-            src="{% static song.picture.url %}"
-            class="rounded-circle img-fluid"
-            alt="..."
-            width="200"
-            height="200"
-          />
-          <div class="carousel-caption d-none d-md-block">
-            <p class="songTitle">{{song.title}}</p>
-          </div>
-        </div>
-        {%endfor%}
-      </div>
-    </div>
-  </div>
+    {% if message %}
+    <div class="alert alert-{{msg_type}}">{{ message }}</div>
+    {% endif %}
+    <br />
+  
+ <!-- Start Container -->
 
-  <!-- carrousel -->
+ <div class="row" id="right_panel">
+    {% for song in songs %}
 
-  <!-- Start Container -->
-
-  <div class="row">
-    {% for song in music %}
-    <div class="col">
-      <a
-        id="clickIt"
-        onclick="loadSong(`{{ song.title }}`, `{{ song.song }}`, `{{ song.artist }}`, `{{ song.picture }}`, `{{ song.id }}`);return false;"
-        href="#"
-      >
+    <div class="col" >
+      <a id="clickIt"
+       href="{% url 'show_player' song.id %}">
         {% if song.picture %}
         <img class="music" src="{% static song.picture.url %}" alt="" />
         {% else %}
@@ -59,7 +31,7 @@
           alt=""
         />
         {% endif %}
-        <p class="songTitle">{{ song.title }}</p>
+        <h2>{{ song.title }}</h2>
       </a>
     </div>
     {%endfor%}
@@ -69,6 +41,7 @@
   <!-- Second Player -->
   <div class="container" id="player" style="display: none">
     <div class="music-player" id="player_inside">
+        
       <button id="closeBtn"></button>
       <img
         src="{% static 'musican/images/No_Image_Available.jpeg' %}"
@@ -76,8 +49,8 @@
         id="song_image"
       />
       <div class="info">
-        <h1 id="artist_name">Artist Name</h1>
-        <h3 id="song_title">Titulo de la cancion</h3>
+        <h4 id="artist_name"></h4>
+        <h5 id="song_title"></h5>
         <div id="waveform"></div>
         <div class="control-bar">
           <img
@@ -105,7 +78,7 @@
             onclick="addRemove();"
             title="Add / Remove playlist"
           />
-          <form action="{% url 'add_to_playlist' 9 %}" method="POST">
+          <form action="{% url 'add_to_playlist' 1 %}" method="POST">
             {% csrf_token %}
             <button
               type="submit"
@@ -113,7 +86,7 @@
               value="Watchlist"
               class="btn btn-secondary btn-sm"
             >
-              Add to Watchlist
+              Add to Playlist
             </button>
           </form>
         </div>
@@ -131,7 +104,5 @@
   </script>
 
   <!--player ends-->
-</div>
-<!-- Main Body ends -->
 
 {% endblock %}

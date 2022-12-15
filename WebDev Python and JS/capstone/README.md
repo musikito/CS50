@@ -21,7 +21,11 @@ pip install -r requirements.txt
 
 # Setup Django
 
+./manage.py makemigrations musican
 ./manage.py migrate
 ./manage.py runserver
+User: Admin
+Email: test@test.com
+Password: Pass@123
 
 # Then visit http://localhost:8000

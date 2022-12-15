@@ -1,0 +1,43 @@
+{% extends "musican/layout.html" %}
+{% load static %}
+{%block head%}
+<head>
+    <title>{% block title %}Artist{% endblock %}</title>
+{%endblock%}
+{% block body %}
+<div>
+ 
+    {% if message %}
+    <div class="alert alert-{{msg_type}}">{{ message }}</div>
+    {% endif %}
+    <br />
+  <div class="info">
+    {% if artist_img %}
+    <img src="{% static artist_img.url %}"  alt="" id="song_image"/>
+    {% else %}
+    <img  src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" id="song_image"/>
+    {% endif %}
+    <h4>{{ artist_name }}</h4>
+  </div>
+ <!-- Start Container -->
+
+ <div class="row" id="right_panel">
+    {% for artist in artist %}
+      
+    <div class="col" >
+      <a id="clickIt"
+       href="{% url 'show_player' artist.id %}">
+        {% if artist.picture %}
+        <img class="music" src="{% static artist.picture.url %}"  alt="" />
+        {% else %}
+        <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt=""/>
+        {% endif %}
+        <h2>{{ artist.title }}</h2>
+      </a>
+    </div>
+    {%endfor%}
+  </div>
+  <!-- End Container -->
+  
+
+{% endblock %}

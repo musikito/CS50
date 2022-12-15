@@ -1,0 +1,48 @@
+{% extends "musican/layout.html" %}
+{% load static %}
+{%block head%}
+<head>
+    <title>{% block title %}Genre{% endblock %}</title>
+{%endblock%}
+{% block body %}
+<div>
+ 
+    {% if message %}
+    <div class="alert alert-{{msg_type}}">{{ message }}</div>
+    {% endif %}
+    <br />
+    <div class="info">
+      {% if genre_img %}
+      <img src="{% static genre_img.url %}"  alt="" id="song_image"/>
+      {% else %}
+      <img  src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" id="song_image"/>
+      {% endif %}
+      <h4>{{ genre_name }}</h4>
+    </div>
+  
+ <!-- Start Container -->
+
+ <div class="row" id="right_panel">
+    {% for genre in genre %}
+      
+    <div class="col" >
+      <a id="clickIt"
+       href="{% url 'show_player' genre.id %}">
+        {% if genre.picture %}
+        <img class="music" src="{% static genre.picture.url %}"  alt="" />
+        {% else %}
+        <img
+          class="music"
+          src="{% static 'musican/images/No_Image_Available.jpeg' %}"
+          alt=""
+        />
+        {% endif %}
+        <h2>{{ genre.title }}</h2>
+      </a>
+    </div>
+    {%endfor%}
+  </div>
+  <!-- End Container -->
+  
+
+{% endblock %}

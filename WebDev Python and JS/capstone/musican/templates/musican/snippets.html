@@ -1,3 +1,52 @@
+onclick="loadSong(`{{ song.title }}`, `{{ song.song }}`, `{{ song.artist }}`, `{{ song.picture }}`, `{{ song.id }}`);return false;" 
+     
+
+<!-- playlista -->
+    <!-- Incluimos la biblioteca wavesurfer.js -->
+<script src="https://unpkg.com/wavesurfer.js"></script>
+
+<!-- Creamos un div donde se mostrará la visualización de la onda de sonido -->
+<div id="waveform"></div>
+
+<!-- Creamos una lista de reproducción con algunas canciones -->
+<ul id="playlist">
+  <li data-src="song1.mp3">Canción 1</li>
+  <li data-src="song2.mp3">Canción 2</li>
+  <li data-src="song3.mp3">Canción 3</li>
+</ul>
+
+<!-- Creamos una instancia de wavesurfer.js y la configuramos para cargar y reproducir las canciones de la lista de reproducción -->
+<script>
+  // Creamos una instancia de wavesurfer.js
+  var wavesurfer = WaveSurfer.create({
+    container: "#waveform",
+    // ... aquí van otras opciones de configuración ...
+  });
+
+  // Creamos una función para cargar una canción dada su URL
+  function loadSong(url) {
+    wavesurfer.load(url);
+  }
+
+  // Obtenemos la lista de reproducción
+  var playlist = document.getElementById("playlist");
+
+  // Iteramos sobre los elementos de la lista de reproducción
+  for (var i = 0; i < playlist.children.length; i++) {
+    // Obtenemos el elemento de la lista de reproducción
+    var item = playlist.children[i];
+
+    // Agregamos un evento de clic al elemento de la lista de reproducción
+    item.addEventListener("click", function() {
+      // Cuando se haga clic en el elemento, cargamos la canción correspondiente
+      loadSong(this.getAttribute("data-src"));
+    });
+  }
+</script>
+
+
+   
+   
    <!-- Second Player -->
    <div class="container">
     <div class="music-player">

@@ -1,83 +1,76 @@
 {% extends "musican/layout.html" %}
 {% load static %}
+{%block head%}
+<head>
+  <title>{% block title %}Musican Playlists{% endblock %}</title>
+  
+  <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
 
+</head>
+{%endblock%}
 
 {% block body %}
-<h1> Item: {{ listing.title }}</h1>
-<div class="container border p-2 m-2">
-  <div class="row">
-   
-    <div class="col">
-        {% if listing.image %}
-            <img src="{% static listing.image.url %}" alt="" style="width:300px; height: auto;" />
-        {% else %}
-            <img style = "width: 20w;" src="{% static 'musican/images/no-image.jpeg' %}" alt="" style="width:300px; height: auto;"/>
-        {% endif %}
-        {% if not list_owner %}
-        <form action="{% url 'add_to_watchlist' listing.id %}" method="POST">
-          {% csrf_token %}
-          <button type="submit" name="button" value="Watchlist" class="btn btn-secondary btn-sm">Add to Watchlist</button>
-        </form>
-        {% endif %}
-    </div>
-    <div class="col text-left">
-      {% if message %}
-          <div class="alert alert-{{msg_type}}">{{ message }}</div>
-      {% endif %}
-        <p>{{ listing.description }}</p>
-        {% if listing.current_bid == 0 %}
-            <h2>${{ listing.starting_bid }}</h2>
-        {% else %}
-        <h2>${{ listing.current_bid }}</h2>
-        {% endif %}
-      {% if not list_owner %}  
-    <form action="{% url 'list_item' listing.id %}" method="POST">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="bid">{{ listing.bids.count }} bid(s) so far. Your bid is the current bid</label>
-      </div>
-      <div class="form-group">
-        {{ form }}
-      </div>
-      <div class="form-group">
-        <input type="submit" name="button" class="btn btn-primary" value="Place Bid">
-      </div>
-    </form>
-    {% else %}
-    <form action="{% url 'close_item' listing.id %}" method="POST">
-      {% csrf_token %}
-      <button type="submit" name="Close" id="Close" class="btn btn-danger">Close Auction</button>
-    </form>
-    {% endif %}
-    </div>
-    <div class="col text-left">
-        <h4>Item Details:</h4>
-        <ul>
-            <li>Listed by: {{ listing.owner }}</li>
-            <li>Category: {{ listing.category }}</li>
-        </ul>
-    </div>
-  </div>
-  <h4>Comments<span class="badge badge-secondary">{{ listing.comment.count }}</span></h4>
-  {% if user.username != listing.owner.username %}
-          <h1>Add a new comment</h1>
-          <form action="{% url 'comments' listing.id %}" method="POST">
-            {% csrf_token %}
-            <div class="form-group">
-              <textarea class="form-control" name="comment" rows="4"></textarea>
-            </div>
-            <input type="submit" value="Create a Comment" class="btn btn-primary">
-          </form>
-  {% endif %}
-  {% for comment in listing.comments.all %}
-      <div class="container m3-5 p-2 border">
-        <div class="card-body">
-          <h5 class="card-title">{{ comment.user }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ comment.comment_date }}</h6>
-          {{ comment.comment }}
-        </div>
-      </div>
-  {% endfor %}
 
+<div class="container">
+  <div class="header">
+      <ul class="nav nav-pills pull-leftt">
+          <li><a href="/"><i class="fa fa-home"></i></a></li>
+      </ul>
+
+      <h1 itemprop="name">Playlist</h1>
+  </div>
+
+  <div id="demo">
+      <div class="row" style="margin: 30px 0">
+          <div class="col-sm-10">
+              <div id="waveform"></div>
+              <div class="control-bar">
+                <img
+                  src="{% static 'musican/images/play.png' %}"
+                  alt="play"
+                  id="playBtn"
+                  title="Play / Pause"
+                />
+                <img
+                  src="{% static 'musican/images/stop.png' %}"
+                  alt="stop"
+                  id="stopBtn"
+                  title="Stop"
+                />
+                <img
+                  src="{% static 'musican/images/volume.png' %}"
+                  alt="volume"
+                  id="volumeBtn"
+                  title="Mute / Unmute"
+                />
+              </div>
+          </div>
+
+          <div class="col-sm-2">
+              <button class="btn btn-success btn-block" id="playPause" style="display:none;">
+                  <span id="play">
+                      <i class="fa fa-play"></i>
+                      Play
+                  </span>
+
+                  <span id="pause" style="display: none">
+                      <i class="fa fa-pause"></i>
+                      Pause
+                  </span>
+              </button>
+          </div>
+      </div>
+{% for listing in mylist %}
+    
+<div class="list-group" id="playlist">
+  <a href="{% static 'musican/images/' %}{{listing.song_added.song}}"  class="list-group-item">
+      <span id="playPause"> <i class="fa fa-play"></i></span>
+      {{listing.song_added.title}}
+      <span class="badge" id="currentTime">00:00:00</span>
+  </a>
 </div>
+</div>
+{% endfor %}
+</div>
+<script src="{% static 'musican/playlist.js' %}"></script>
 {% endblock %}

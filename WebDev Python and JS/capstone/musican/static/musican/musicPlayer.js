@@ -16,6 +16,8 @@ const player = document.getElementById("player");
 const song_title = document.getElementById("song_title");
 // Album art
 const song_img = document.getElementById("song_image");
+// Right panel
+const right_panel = document.getElementById("right_panel");
 
 let songId;
 
@@ -40,7 +42,6 @@ function stopPlay() {
 }
 
 
-
 function loadSong(title, url, artist, img_url, songid) {
 
     songId = songid;
@@ -49,13 +50,21 @@ function loadSong(title, url, artist, img_url, songid) {
     stopPlay();
     // Load the MP3
     wavesurfer.load(base_url + url);
-    // console.log(base_url + url)
+
 
     player.style.display = "block";
     artist_name.innerHTML = `${artist}`;
     song_title.innerHTML = `${title}`;
-    song_img.src = base_url + `${img_url}`;
-    // console.log(title, url, artist, img_url);
+    if (img_url) {
+        song_img.src = base_url + `${img_url}`;
+    } else {
+        song_img.src = base_url + "No_Image_Available.jpeg";
+    }
+
+    // Hide right panel
+    right_panel.style.display = "none";
+
+
 
 } // End of loadSong
 
@@ -99,11 +108,10 @@ async function addRemove() {
 stopBtn.onclick = function () {
     playBtn.src = "static/musican/images/play.png";
     wavesurfer.stop();
-
 } // End of stop button
 
-playBtn.onclick = function () {
 
+playBtn.onclick = function () {
     wavesurfer.playPause();
     // Change button img accordingly
     if (playBtn.src.includes("play.png")) {
@@ -116,10 +124,12 @@ playBtn.onclick = function () {
 closeBtn.onclick = function () {
     stopPlay();
     player.style.display = "none";
+    right_panel.style.display = "inline";
 } // End of closeBtn
-
 
 wavesurfer.on('finish', function () {
     playBtn.src = "static/musican/images/play.png";
     wavesurfer.stop();
-})
+    player.style.display = "none";
+    right_panel.style.display = "";
+}); // End of Finish

@@ -1,33 +1,25 @@
-import json
 from sre_parse import CATEGORIES
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Comments, Playlist, SongInfo
-
+from .models import User, Comments, Playlist, SongInfo, Artist, Genre
+from .forms import *
 
 REGISTER = "musican/register.html"
 LOGIN = "musican/login.html"
 PLAYLIST = "musican/playlist.html"
 HOME = "musican/index.html"
+PLAYER = "musican/show_player.html"
 
 
 def index(request):
-    return render(request, "musican/index.html", {
-        "music": SongInfo.objects.all()
+    return render(request, HOME, {
+        "songs": SongInfo.objects.all()
     })
-
-
-def load_allsongs(request):
-
-    songs = SongInfo.objects.all()
-    songs = songs.order_by("-posted_on").all()
-
-    return JsonResponse([song.serialize() for song in songs], safe=False)
 
 
 def login_view(request):
@@ -82,64 +74,158 @@ def register(request):
         return render(request, REGISTER)
 
 
-def user_profile(request, username):
-    user = User.objects.get(username=username)
-    # user_posts = Posts.objects.filter(poster=user)
-    # pages = Paginator(user_posts, 10)
-    # This ATTRIBS come from the models related_name
-    following = user.user_following.all()
-    followers = user.user_followers.all()
+# See Documentation for this decorator:
+# https://docs.djangoproject.com/es/4.0/topics/auth/default/
+# Also: https://stackoverflow.com/questions/3578882/how-to-specify-the-login-required-redirect-url-in-django
+@login_required(login_url='/login')
+def create_genre(request):
+    if request.method == "POST":
+        user = User.objects.get(username=request.user)
+        form = GenreForm(request.POST, request.FILES)
 
-    check_follow = False
-    for i in followers:
-        if request.user.username == i.follower.username:
-            check_follow = True
-
-    context = {
-        "username": username,
-        # "posts": user_posts,
-        "following": following,
-        "followers": followers,
-        "check_follow": check_follow,
-        # "pages": pages,
-    }
-
-    return render(request, "network/profile.html", context)
+        if form.is_valid():
+            genre = form.save(commit=False)
+            genre.owner = user
+            genre.save()
+            return render(request, "musican/genre.html", {
+                "message": "Genre was added",
+                "msg_type": "success"
+            })
+    else:
+        return render(request, "musican/create_genre.html", {
+            "form": GenreForm()
+        })
 
 
-def add_to_playlist(request, listing_id):
-    playlist = SongInfo.objects.get(pk=listing_id)
+def genre_list(request):
+    return render(request, "musican/genre_list.html", {
+        "genres": Genre.objects.all()
+    })
+
+
+def genre(request, genre_name):
+    genre_id = Genre.objects.get(pk=genre_name)
+
+    return render(request, "musican/genre.html", {
+        "genre": SongInfo.objects.filter(genre=genre_name),
+        "genre_img": genre_id.genre_image,
+        "genre_name": genre_id.genre_name
+    })
+
+
+@login_required(login_url='/login')
+def create_artist(request):
+    if request.method == "POST":
+        user = User.objects.get(username=request.user)
+        form = ArtistForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            artist = form.save(commit=False)
+            artist.owner = user
+            artist.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "musican/create_artist.html", {
+                "form": form
+            })
+    else:
+        return render(request, "musican/create_artist.html", {
+            "form": ArtistForm()
+        })
+
+
+def artists_list(request):
+    return render(request, "musican/artists_list.html", {
+        "artists": Artist.objects.all()
+    })
+
+
+def artist(request, artist_name):
+    artist_id = Artist.objects.get(pk=artist_name)
+
+    return render(request, "musican/artist.html", {
+        "artist": SongInfo.objects.filter(artist=artist_name),
+        "artist_img": artist_id.picture,
+        "artist_name": artist_id.artist_name
+    })
+
+
+@login_required(login_url='/login')
+def create_song(request):
+    if request.method == "POST":
+        user = User.objects.get(username=request.user)
+        form = SongsListingForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            song = form.save(commit=False)
+            song.owner = user
+            song.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "musican/create_song.html", {
+                "form": form
+            })
+    else:
+        return render(request, "musican/create_song.html", {
+            "form": SongsListingForm()
+        })
+
+
+@login_required(login_url='/login')
+def add_to_playlist(request, song_id):
+    song = SongInfo.objects.get(pk=song_id)
     user = User.objects.get(username=request.user)
-    if not user.watchlist.filter(item_watched=playlist):
-
-        watchlist = Playlist()
-        watchlist.user = user
-        watchlist.item_watched = playlist
-        watchlist.save()
-        return render(request, PLAYLIST, {
-            "listing": playlist,
-            # "form": BidForm(),
-            "message": "Item was added to your wishlist",
+    if not user.playlist.filter(song_added=song):
+        playlist = Playlist()
+        playlist.user = user
+        playlist.song_added = song
+        playlist.save()
+        return render(request, PLAYER, {
+            "song": song,
+            "added": True,
+            "message": "Song was added to your playlist",
             "msg_type": "success"
-
         })
     else:
-        user.watchlist.filter(item_watched=playlist).delete()
-        return render(request, PLAYLIST, {
-            "listing": playlist,
-            # "form": BidForm(),
-            "message": "Your item was removed from the wishlist",
+        user.playlist.filter(song_added=song).delete()
+        return render(request, PLAYER, {
+            "song": song,
+            "removed": True,
+            "message": "The song was removed from your playlist",
             "msg_type": "danger"
-
         })
 
 
 @ login_required(login_url='/login')
-def watchlist(request):
+def playlist(request):
     user = User.objects.get(username=request.user)
     # https://docs.djangoproject.com/en/dev/ref/models/querysets/
     # https://stackoverflow.com/questions/21566017/parsing-the-django-model-results
     # mylist = watchlist.objects.get(user=request.user)
-    return render(request, "musican/watchlist.html", {
-        "mylist": user.watchlist.all()
+    return render(request, "musican/playlist.html", {
+        "mylist": user.playlist.all()
+    })
+
+
+def show_player(request, song_id):
+    return render(request, PLAYER, {
+        "song": SongInfo.objects.get(pk=song_id)
+    })
+
+
+@ login_required(login_url='/login')
+def comments(request, listing_id):
+    listing = SongInfo.objects.get(pk=listing_id)
+    user = User.objects.get(username=request.user)
+    comment = Comments()
+    comment.comment = request.POST.get("comment")
+    comment.user = user
+    comment.save()
+    listing.comments.add(comment)
+    listing.save()
+
+    return render(request, "auctions/list_item.html", {
+        "listing": listing,
+        "message": "Your comment was added.",
+        "msg_type": "success"
     })

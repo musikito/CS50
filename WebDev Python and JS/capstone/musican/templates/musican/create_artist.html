@@ -1,0 +1,15 @@
+{% extends "musican/layout.html" %} 
+{% block body %}
+<h1>Add Artist</h1>
+
+<form action="{% url 'create_artist' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %} 
+    <div class="form-group">
+      <table>
+        {{ form.as_table }}
+      </table>
+    </div>
+    
+    <input type="submit" class="btn btn-primary" value="Add" />
+  </form>
+  {% endblock %}

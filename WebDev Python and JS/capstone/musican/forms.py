@@ -3,20 +3,30 @@ from django.forms import ModelForm
 # https://docs.djangoproject.com/en/4.0/topics/forms/modelforms/
 
 # Import everything from models
-from .models import *
+from .models import SongInfo, Genre, Artist, Comments
 
 
-class AuctionListForm(ModelForm):
+class SongsListingForm(ModelForm):
     class Meta:
-        model = Auction_Listings
-        fields = ["title", "description", "image",
-                  "category", "active", "starting_bid"]
+        model = SongInfo
+        fields = ["title", "song", "picture", "artist",
+                  "genre", "description", "featured_song"]
+
+    def __init__(self, *args, **kwargs):
+        super(SongsListingForm, self).__init__(*args, **kwargs)
+        self.fields['artist'].queryset = Artist.objects.all()
 
 
-class BidForm(ModelForm):
+class GenreForm(ModelForm):
     class Meta:
         model = Genre
-        fields = ["genre_name", "genre_image"]
+        fields = ["genre_name", "genre_image", "description"]
+
+
+class ArtistForm(ModelForm):
+    class Meta:
+        model = Artist
+        fields = ["artist_name", "picture", "bio", "featured_artist"]
 
 
 class CommentForm(ModelForm):
