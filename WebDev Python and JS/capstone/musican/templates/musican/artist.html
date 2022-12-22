@@ -18,6 +18,7 @@
     <img  src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt="" id="song_image"/>
     {% endif %}
     <h4>{{ artist_name }}</h4>
+    <p>{{ artist_bio }}</p>
   </div>
  <!-- Start Container -->
 
@@ -33,6 +34,7 @@
         <img class="music" src="{% static 'musican/images/No_Image_Available.jpeg' %}" alt=""/>
         {% endif %}
         <h2>{{ artist.title }}</h2>
+        
       </a>
     </div>
     {%endfor%}

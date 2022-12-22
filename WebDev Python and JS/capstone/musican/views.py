@@ -146,7 +146,8 @@ def artist(request, artist_name):
     return render(request, "musican/artist.html", {
         "artist": SongInfo.objects.filter(artist=artist_name),
         "artist_img": artist_id.picture,
-        "artist_name": artist_id.artist_name
+        "artist_name": artist_id.artist_name,
+        "artist_bio": artist_id.bio
     })
 
 

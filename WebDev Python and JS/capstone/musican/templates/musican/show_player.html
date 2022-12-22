@@ -2,7 +2,7 @@
 {% load static %}
 {%block head%}
 <head>
-  <title>{% block title %}Musican Playlists{% endblock %}</title>
+  <title>{% block title %}Musican Player{% endblock %}</title>
 
   <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
 </head>
@@ -29,10 +29,12 @@
        href="{% url 'artist' song.artist.id %}">
         <h1 >{{ song.artist }}</h1>
         </a>
+        {% if song.genre.id %}
         <a id="clickIt"
        href="{% url 'genre' song.genre.id %}">
         <h4>{{ song.genre }}</h4>
         </a>
+        {% endif %}
         <h3 id="song_url" data-src={{song.song}}>{{ song.title }}</h3>
         <div id="waveform"></div>
         <div class="control-bar">
